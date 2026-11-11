@@ -1,0 +1,1727 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>從數位教學到 AI 協作｜臺南高商教師研習（SOIL 雙層旗艦版 v2：極簡投影＋學員講義）</title>
+<style>
+:root {
+  --ink: #15304a;
+  --muted: #587084;
+  --blue: #176b9a;
+  --mint: #0c7d78;
+  --gold: #d78c2e;
+  --danger: #c6362c;
+  --paper: #f6f9fc;
+  --card-bg: #ffffff;
+  --line: #d6e3eb;
+  --stage-bg: #dbe7ed;
+  --shadow: 0 22px 70px #19364c28;
+}
+body.dark-mode {
+  --ink: #f2f7fb;
+  --muted: #a9c2d6;
+  --blue: #38a3dc;
+  --mint: #12b8ae;
+  --gold: #ffbe4d;
+  --danger: #ff6b57;
+  --paper: #0e2030;
+  --card-bg: #152c40;
+  --line: #254561;
+  --stage-bg: #08121b;
+  --shadow: 0 28px 80px rgba(0, 0, 0, 0.65);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--stage-bg);
+  color: var(--ink);
+  font-family: "jf open 粉圓 2.1", "GenSenRounded TW", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.2s, color 0.2s;
+}
+button, a { font: inherit; }
+button { cursor: pointer; }
+
+.stage {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 34px 18px 64px;
+}
+.slide {
+  width: min(94vw, calc(86vh * 16 / 9), 1600px);
+  aspect-ratio: 16 / 9;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+  display: none;
+  flex-direction: column;
+  padding: 3.5% 4.6% 2.6%;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+}
+.slide.active { display: flex; }
+.slide::before {
+  content: "";
+  height: 10px;
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  background: linear-gradient(90deg, var(--blue), var(--mint), #7fc3ba);
+}
+
+/* Eyebrow Row */
+.eyebrow-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.3%;
+  gap: 12px;
+}
+.eyebrow {
+  font-size: clamp(13px, 1.15vw, 19px);
+  font-weight: 800;
+  color: var(--mint);
+  letter-spacing: 0.05em;
+}
+.jump-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 99px;
+  background: #fff3df;
+  color: #9a5406;
+  border: 1.5px solid #ebb86b;
+  font-size: clamp(12px, 0.95vw, 15px);
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.16s;
+  white-space: nowrap;
+}
+body.dark-mode .jump-pill {
+  background: rgba(255, 190, 77, 0.16);
+  color: #ffbe4d;
+  border-color: rgba(255, 190, 77, 0.55);
+}
+.jump-pill:hover {
+  background: var(--gold);
+  color: #fff;
+  border-color: var(--gold);
+  transform: translateY(-1px);
+}
+.return-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #e6f4f1;
+  border: 1.5px solid #85bfb9;
+  border-radius: 10px;
+  padding: 6px 14px;
+  margin-bottom: 1.2%;
+  cursor: pointer;
+  color: #09524e;
+  font-weight: 800;
+  font-size: clamp(13px, 1.1vw, 17px);
+  transition: background 0.15s;
+}
+.return-bar:hover { background: #d0ebe6; }
+body.dark-mode .return-bar { background: #12383c; border-color: #1f7a82; color: #8de2d0; }
+
+/* Headings */
+.slide h1 {
+  font-size: clamp(32px, 4.0vw, 64px);
+  line-height: 1.18;
+  margin: 0 0 1.6%;
+  letter-spacing: -0.03em;
+}
+.slide h2 {
+  font-size: clamp(25px, 2.8vw, 46px);
+  line-height: 1.22;
+  margin: 0 0 1.6%;
+  letter-spacing: -0.025em;
+}
+.lead {
+  font-size: clamp(18px, 1.9vw, 30px);
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+/* Body */
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  font-size: clamp(16px, 1.58vw, 25px);
+  line-height: 1.52;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.8%;
+}
+.body p { margin: 0.25em 0; }
+.body ul, .body ol { margin: 0.2em 0; padding-left: 1.3em; }
+.body li { margin: 0.22em 0; }
+
+/* Grids */
+.cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.2%;
+  align-items: stretch;
+}
+.cols.three { grid-template-columns: repeat(3, 1fr); }
+.cols.four { grid-template-columns: repeat(4, 1fr); gap: 1.6%; }
+
+/* Cards */
+.card {
+  background: var(--card-bg);
+  border: 1.5px solid var(--line);
+  border-radius: 18px;
+  padding: 4.2% 4.8%;
+  box-shadow: 0 5px 20px #1f4b6210;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.card h3 {
+  font-size: 1.18em;
+  margin: 0 0 0.35em;
+  color: var(--blue);
+  line-height: 1.28;
+}
+.card.accent { background: #e9f5f3; border-color: #a8d5ce; }
+.card.warm { background: #fff5e7; border-color: #efd2a4; }
+.card.danger { background: #fff0ee; border-color: #f1b2aa; }
+.card.danger h3 { color: var(--danger); }
+body.dark-mode .card.accent { background: #113a44; border-color: #1f7a82; }
+body.dark-mode .card.warm { background: #362813; border-color: #8f6220; }
+body.dark-mode .card.danger { background: #3b1c19; border-color: #963b32; }
+
+/* Buttons */
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 0.4em;
+}
+.go-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.48em 1.1em;
+  border-radius: 14px;
+  background: var(--blue);
+  color: #ffffff !important;
+  font-size: clamp(15px, 1.38vw, 22px);
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgba(23, 107, 154, 0.22);
+  transition: transform 0.15s, background 0.15s;
+}
+.go-btn:hover { background: #0f5278; transform: translateY(-2px); }
+.go-btn.mint { background: var(--mint); box-shadow: 0 6px 18px rgba(12, 125, 120, 0.22); }
+.go-btn.mint:hover { background: #085c58; }
+.go-btn.gold { background: var(--gold); box-shadow: 0 6px 18px rgba(215, 140, 46, 0.22); }
+.go-btn.gold:hover { background: #b16f1b; }
+.go-btn.outline {
+  background: var(--card-bg);
+  color: var(--blue) !important;
+  border: 2px solid var(--blue);
+  box-shadow: none;
+}
+body.dark-mode .go-btn.outline { color: #8de2d0 !important; border-color: #8de2d0; }
+.go-btn.outline:hover { background: var(--blue); color: #fff !important; }
+
+/* Helpers */
+.big { font-size: 1.25em; font-weight: 800; line-height: 1.38; }
+.huge { font-size: 1.78em; font-weight: 900; line-height: 1.28; color: var(--blue); }
+.muted { color: var(--muted); }
+.tag {
+  display: inline-block;
+  padding: 0.2em 0.65em;
+  border-radius: 99px;
+  background: #dceef4;
+  color: #075d87;
+  font-size: 0.7em;
+  font-weight: 800;
+  margin-bottom: 0.35em;
+  align-self: flex-start;
+}
+body.dark-mode .tag { background: #1b4965; color: #8de2d0; }
+.flow {
+  display: flex;
+  align-items: stretch;
+  gap: 1.1%;
+  margin: 1.2% 0;
+}
+.flow span {
+  flex: 1;
+  text-align: center;
+  background: #e6f2f5;
+  border-radius: 12px;
+  padding: 1.1% 1.4%;
+  font-weight: 800;
+  font-size: 0.88em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+body.dark-mode .flow span { background: #16364a; }
+.flow i {
+  align-self: center;
+  color: var(--mint);
+  font-style: normal;
+  font-weight: 900;
+  font-size: 1.2em;
+}
+
+/* Prompt Box */
+.prompt-box {
+  background: #102e45;
+  color: #ffffff;
+  border-radius: 15px;
+  padding: 1.2em 1.4em;
+  font-size: 0.85em;
+  font-family: Consolas, Monaco, "Courier New", monospace;
+  white-space: pre-wrap;
+  line-height: 1.52;
+  overflow: auto;
+  border: 1px solid #234d6e;
+}
+.prompt-box strong { color: #8de2d0; }
+.copy-btn {
+  background: var(--mint);
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 0.75em;
+  font-weight: 800;
+  margin-bottom: 6px;
+  align-self: flex-end;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.copy-btn:hover { background: #085c58; }
+
+/* Big Task Card */
+.task-card {
+  background: var(--mint);
+  color: #ffffff;
+  border-radius: 18px;
+  padding: 4.8%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  box-shadow: 0 6px 22px rgba(12, 125, 120, 0.28);
+}
+.task-card h3 { font-size: 1.4em; margin: 0 0 0.5em; color: #fff; }
+.task-card .target { font-size: 1.1em; font-weight: 800; margin-top: 0.6em; color: #d4eee9; }
+.task-card .timer { font-size: 2.3em; font-weight: 900; margin: 0.25em 0; color: #fff; letter-spacing: 0.05em; }
+.task-card button {
+  align-self: flex-start;
+  background: #ffffff;
+  color: var(--mint);
+  border: 0;
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 0.8em;
+  font-weight: 800;
+  cursor: pointer;
+  margin-top: 4px;
+}
+.task-card button:hover { background: #f0f7f6; }
+
+/* Roadmap in P03 */
+.roadmap {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.1%;
+  margin: 1.2% 0 1.8%;
+}
+.roadstep {
+  position: relative;
+  min-height: 220px;
+  background: #fff;
+  border: 2px solid var(--line);
+  border-radius: 16px;
+  padding: 16px 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+body.dark-mode .roadstep { background: #152c40; }
+.roadstep:hover { border-color: var(--mint); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(12, 125, 120, 0.18); }
+.roadstep .num { font-size: 0.72em; color: var(--mint); font-weight: 900; }
+.roadstep h3 { font-size: 1.1em; line-height: 1.22; margin: 0.3em 0 0.5em; color: var(--blue); }
+.roadstep p { font-size: 0.76em; line-height: 1.42; color: var(--muted); }
+.roadstep small {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.64em;
+  color: var(--blue);
+  font-weight: 800;
+}
+.roadstep.current { background: #e9f5f3; border-color: #75bcb4; }
+body.dark-mode .roadstep.current { background: #123e47; border-color: #12b8ae; }
+
+/* 5-Station Progress */
+.road-progress {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 8px;
+}
+.road-seg {
+  border: 1px solid var(--line);
+  background: rgba(12, 125, 120, 0.06);
+  color: var(--muted);
+  border-radius: 99px;
+  padding: 3px 8px;
+  font-size: clamp(10px, 0.8vw, 12.5px);
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.road-seg:hover { border-color: var(--mint); transform: translateY(-1px); }
+.road-seg.done { background: #d8efec; border-color: #85bfb9; color: #09524e; }
+body.dark-mode .road-seg.done { background: #123b3f; border-color: #1f7a82; color: #9de8e1; }
+.road-seg.current { background: var(--mint); border-color: var(--mint); color: #fff; box-shadow: 0 2px 10px rgba(12, 125, 120, 0.32); }
+
+/* Footer */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--line);
+  margin-top: 6px;
+  padding-top: 6px;
+  font-size: clamp(10px, 0.82vw, 13px);
+  color: var(--muted);
+}
+.footer b { color: var(--mint); }
+
+/* Controls */
+.controls {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  background: rgba(19, 50, 71, 0.94);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 14px;
+  z-index: 25;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(8px);
+}
+.controls button {
+  border: 0;
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.controls button:hover { background: rgba(255, 255, 255, 0.3); }
+.controls .counter { min-width: 95px; text-align: center; font-size: 13px; font-weight: 800; }
+.controls .switch-btn { background: var(--gold); color: #fff; }
+.controls .switch-btn:hover { background: #e89d3c; }
+
+/* TOC */
+.toc {
+  position: fixed;
+  left: 15px;
+  top: 15px;
+  z-index: 30;
+  background: var(--card-bg);
+  box-shadow: var(--shadow);
+  border-radius: 14px;
+  padding: 16px;
+  max-height: 85vh;
+  overflow: auto;
+  width: min(440px, 92vw);
+  display: none;
+  border: 1px solid var(--line);
+}
+.toc.open { display: block; }
+.toc h3 { margin: 8px 0 6px; font-size: 14px; color: var(--mint); border-bottom: 1px solid var(--line); padding-bottom: 4px; }
+.toc button {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: rgba(12, 125, 120, 0.05);
+  text-align: left;
+  margin: 3px 0;
+  padding: 7px 10px;
+  border-radius: 6px;
+  color: var(--ink);
+  font-size: 13px;
+}
+.toc button:hover { background: var(--mint); color: #fff; }
+
+/* Presenter Speaker Mode */
+.speaker { display: none; }
+.speaker-mode { background: #122634; color: #ffffff; padding: 22px; }
+.speaker-mode .stage, .speaker-mode .controls, .speaker-mode .toc { display: none; }
+.speaker-mode .speaker { display: grid; grid-template-columns: 1.15fr 1fr; gap: 20px; }
+.speaker-mode .speaker h1 { font-size: 26px; margin: 0 0 8px; }
+.speaker-mode .speaker h2 { font-size: 21px; color: #8de2d0; margin: 0 0 10px; }
+.speaker-mode .speaker p { font-size: 18px; line-height: 1.55; }
+.speaker-mode .speaker .panel { background: #1d394b; border-radius: 16px; padding: 22px; }
+.speaker-mode .speaker button { border: 0; border-radius: 8px; padding: 9px 15px; margin-right: 8px; font-weight: 800; }
+.speaker-mode .speaker .clock { font-size: 34px; font-weight: 900; color: #8de2d0; margin: 6px 0; }
+
+@media (max-width: 820px) {
+  .stage { display: block; padding: 12px 8px 76px; }
+  .slide, .slide.active { width: 100%; min-height: calc(100dvh - 88px); height: auto; aspect-ratio: auto; padding: 24px 18px 20px; }
+  .cols, .cols.three, .cols.four, .roadmap { grid-template-columns: 1fr; gap: 12px; }
+  .roadstep { min-height: 120px; }
+  .controls { max-width: 98vw; overflow-x: auto; }
+}
+</style>
+</head>
+<body>
+
+<main class="stage" id="stage"></main>
+
+<nav class="controls" aria-label="簡報導覽與控場工具列">
+  <button type="button" id="tocBtn" title="開啟章節目錄 (M)">☰ 目錄</button>
+  <button type="button" id="roadBtn" title="回到 5 站路線圖 (R)">🗺 路線</button>
+  <button type="button" id="prev" title="上一頁 (← / PageUp)">←</button>
+  <span class="counter" id="counter" aria-live="polite">投影 P01 / P20</span>
+  <button type="button" id="next" title="下一頁 (→ / Space / PageDown)">→</button>
+  <button type="button" id="switchSectionBtn" class="switch-btn" title="切換 投影版／講義卡庫 (H)">📖 切換講義</button>
+  <button type="button" id="themeBtn" title="切換 深淺色模式 (T)">🌙</button>
+  <button type="button" id="drawBtn" title="畫筆批註 (D)">✎</button>
+  <button type="button" id="clearBtn" title="清除畫筆 (C)">⌫</button>
+  <button type="button" id="speakerBtn" title="開啟雙螢幕講師視窗 (P)">🎙 講師</button>
+  <button type="button" id="fullBtn" title="切換全螢幕 (F)">⛶</button>
+</nav>
+
+<aside class="toc" id="toc" aria-label="章節目錄"></aside>
+<section class="speaker" id="speaker"></section>
+
+<script>
+// ============================================================================
+// RESOURCE LINKS
+// ============================================================================
+const R = {
+  site: "https://sites.google.com/a/ksvs.kh.edu.tw/misszhang0119/",
+  lab: "https://t508-ksvs.github.io/ai-learning-lab/",
+  gemini: "https://gemini.google.com/",
+  notebookHome: "https://notebooklm.google.com/",
+  calendar: "https://calendar.google.com/",
+  drive: "https://drive.google.com/",
+  activity: "https://myactivity.google.com/product/gemini",
+  personal: "https://gemini.google.com/personalization-settings",
+  apps: "https://gemini.google.com/apps",
+  pdf: "https://drive.google.com/file/d/1LgAP3Fj_0i4hwKYTvKO4Lf6T-fNmRL2V/view",
+  notebookChem: "https://notebook.google.com/notebook/187713cd-ef6d-46bf-badf-f4e59d84751d",
+  notebookExam: "https://notebook.google.com/notebook/5327e27e-1886-4e2d-93e9-172390281676",
+  skillsFolder: "https://drive.google.com/drive/folders/1FkThSAn1XHhzjMtiAS7gUVM0idFN3QTR?usp=drive_link",
+  customSkillsUrl: "https://gemini.google.com/customize/skills",
+  gasDoc: "https://docs.google.com/document/d/1Hofm1LtS-rNsZIb060aNCexeft38F7AXts0YaAyniAY/edit?usp=sharing",
+  root: "https://drive.google.com/drive/folders/1zk11lwp1UeMjaamQLxWoj2HHUmJatOuD",
+  testbank: "https://drive.google.com/file/d/1RfSb42rSyXa0VxAgrod76xVurghCnPfb/view",
+  satbank: "https://drive.google.com/file/d/1yK0REnIcP6q9xJ4tSkOSpBQtcGaPodP9/view",
+  lineGroup: "https://line.me/ti/g2/ZdFT82v4BNNW4vkqZixexy-_Kek71HeU6RcCUw?utm_source=invitation&utm_medium=link_copy&utm_campaign=default",
+  gegFb: "https://www.facebook.com/groups/2294169410829101",
+  ytShirley: "https://www.youtube.com/@shirleyli0504",
+  ytSanshiba: "https://www.youtube.com/@sensebar",
+  ytChami: "https://www.youtube.com/@edreamerTW",
+  ytChuyk: "https://www.youtube.com/@chuyk/"
+};
+
+const goBtn = (label, url, cls = "") => `<a href="${url}" target="_blank" rel="noopener" class="go-btn ${cls}">${label} ↗</a>`;
+const jumpBtn = (targetId, label) => `<button type="button" class="jump-pill" onclick="jumpTo('${targetId}')">📋 ${label} ➔</button>`;
+const returnBar = (targetId, label) => `<div class="return-bar" onclick="jumpTo('${targetId}')"><span>⬅ 回到投影第 ${targetId} 頁：${label}</span><small>點此返回 ↩</small></div>`;
+
+const task = (minutes, steps, target) => `
+  <div class="task-card">
+    <h3>⏱ 實作倒數 (${minutes} 分鐘)</h3>
+    <div style="font-size:0.95em;line-height:1.55">${steps}</div>
+    <div class="target">🎯 完成標準：${target}</div>
+    <div class="timer" data-minutes="${minutes}">${String(minutes).padStart(2, "0")}:00</div>
+    <button type="button" class="startTimer">▶ 開始／暫停倒數</button>
+  </div>
+`;
+
+const promptCard = (id, text) => `
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <button type="button" class="copy-btn" data-copy="${id}">📋 一鍵複製完整指令</button>
+    <div class="prompt-box" id="${id}">${text}</div>
+  </div>
+`;
+
+// ============================================================================
+// 5-STATION ROADMAP CONFIG
+// ============================================================================
+const route = [
+  ["總體與隱私", "設定習慣、帳號與資料界線", "13:00–13:25", "P01–P04"],
+  ["生活日曆運用", "單筆活動添加、校曆 PDF 轉 CSV", "13:25–13:55", "P05–P08"],
+  ["班級經營運用", "Gemini Notebook 依來源查核", "13:55–14:10", "P09–P10"],
+  ["教學命題審題", "段考出題五件套、三大 Skill 審題", "14:10–14:55", "P11–P17"],
+  ["彩蛋與行動收尾", "Canvas 寄成績、三項行動實踐", "14:55–15:00", "P18–P20"]
+];
+const stageTargets = ["P01", "P05", "P09", "P11", "P18"];
+
+// Smart Bidirectional Mapping: Stage Slide <-> Handout Slide
+const stageToHandoutMap = {
+  "P01": "H01", "P02": "H01", "P03": "H01", "P04": "H01",
+  "P05": "H02", "P06": "H02",
+  "P07": "H03", "P08": "H03",
+  "P09": "H04", "P10": "H04",
+  "P11": "H05", "P12": "H05",
+  "P13": "H06", "P14": "H06",
+  "P15": "H07", "P16": "H07", "P17": "H07",
+  "P18": "H08",
+  "P19": "H08", "P20": "H08"
+};
+
+const handoutToStageMap = {
+  "H01": "P04",
+  "H02": "P06",
+  "H03": "P08",
+  "H04": "P10",
+  "H05": "P12",
+  "H06": "P13",
+  "H07": "P17",
+  "H08": "P18"
+};
+
+let lastStageId = "P01";
+
+// ============================================================================
+// ALL SLIDES: PART 1 (STAGE 01-20) + PART 2 (HANDOUT H01-H08)
+// ============================================================================
+const slides = [
+  // --------------------------------------------------------------------------
+  // PART 1: 投影版 (P01 ~ P20)
+  // --------------------------------------------------------------------------
+  // P01: 封面
+  {
+    type: "stage", id: "P01", stage: 0, section: "開場", time: "13:00–13:05",
+    title: "從數位教學到 AI 協作",
+    body: `
+      <div class="lead">Gemini × NotebookLM｜生活與教學應用工作坊</div>
+      <div class="flow" style="margin:2.5% 0">
+        <span><b>1. 看見可能性</b></span><i>→</i><span><b>2. 守住安全界線</b></span><i>→</i><span><b>3. 依指定來源生成</b></span><i>→</i><span><b>4. 教師查核決定</b></span>
+      </div>
+      <p class="huge" style="margin:0.4em 0">打造「有來源、可查核、可修訂」的教學命題工作流</p>
+      <p class="muted" style="font-size:0.9em;margin-top:0.8em">講師：張秋芸老師（misszhang0119）｜國立臺南高商教師研習｜2026/11/24</p>
+      <div class="btn-row">
+        ${goBtn("🌐 張秋芸老師個人教學網站", R.site, "outline")}
+        ${goBtn("📂 研習公開主資料夾", R.root, "gold")}
+      </div>
+    `,
+    note: "歡迎南商老師！建立研習核心共識：AI 給第一稿，老師保留最後裁決權。"
+  },
+
+  // P02: 引起興趣
+  {
+    type: "stage", id: "P02", stage: 0, section: "引起興趣", time: "13:05–13:10",
+    title: "引起興趣｜我用 AI 在高職現場做到了什麼？",
+    body: `
+      <div class="cols three">
+        <div class="card">
+          <span class="tag">01 學生自學</span>
+          <h3 style="font-size:1.3em">互動講義與自學網</h3>
+          <p class="big" style="color:var(--blue)">一字多義圖像化 × 閃卡發音</p>
+          <p class="muted" style="font-size:0.88em">將抽象字根拆成認知心智圖，學生自主掃描重複練。</p>
+        </div>
+        <div class="card accent">
+          <span class="tag">02 多元發表</span>
+          <h3 style="font-size:1.3em">教學動畫與雙語短片</h3>
+          <p class="big" style="color:var(--mint)">旁白配音 × 精準分鏡動畫</p>
+          <p class="muted" style="font-size:0.88em">把複雜文法與專業知識，用 AI 快速轉為吸睛教學短影音。</p>
+        </div>
+        <div class="card warm">
+          <span class="tag">03 行政減量</span>
+          <h3 style="font-size:1.3em">校曆轉日曆 × 試題審題</h3>
+          <p class="big" style="color:var(--gold)">10 秒進日曆 × 雙正解偵錯</p>
+          <p class="muted" style="font-size:0.88em">PDF 校曆轉 CSV、依課本出題並由獨立審題 Skill 找盲點。</p>
+        </div>
+      </div>
+      <div class="btn-row" style="margin-top:0.8em">
+        ${goBtn("🧪 參觀張老師的 AI 教材實驗室", R.lab, "mint")}
+      </div>
+    `,
+    note: "展示真實教材實驗室成果，讓老師看見實用性，建立親切感。"
+  },
+
+  // P03: 5站路線圖 (各站皆可點擊直達該站起點)
+  {
+    type: "stage", id: "P03", stage: 0, section: "Roadmap", time: "13:10–13:13",
+    title: "兩小時路線圖｜從選任務到七天行動",
+    body: `
+      <div class="roadmap">
+        ${route.map((x, i) => `
+          <button type="button" class="roadstep ${i === 0 ? "current" : ""}" onclick="jumpTo('${stageTargets[i]}')" aria-label="跳到第 ${i + 1} 站：${x[0]}">
+            <div class="num">STATION 0${i + 1}</div>
+            <h3>${x[0]}</h3>
+            <p>${x[1]}</p>
+            <small><span>⏱ ${x[2]}</span><span>📄 ${x[3]}</span></small>
+          </button>
+        `).join("")}
+      </div>
+      <p class="big" style="color:var(--mint);text-align:center;margin-top:0.6em">「點選任一站大卡片，可直接跳轉至該階段起點頁面」</p>
+    `,
+    note: "向老師介紹整場五大階段，點擊卡片即可快速跳頁。"
+  },
+
+  // P04: 總體設定與隱私
+  {
+    type: "stage", id: "P04", stage: 0, section: "總體設定與隱私", time: "13:13–13:25",
+    title: "總體指引與隱私防線｜建立原則，守住資料界線",
+    body: `
+      <div class="cols">
+        <div class="card" style="padding:5%">
+          <span class="tag">防線 ① 總體指引 (G00-A)</span>
+          <h3 style="font-size:1.3em">證據優先 · 允許留白</h3>
+          <ul style="font-size:0.92em;color:var(--muted);line-height:1.6">
+            <li><b>❌ 嚴禁模糊推測：</b>禁止回答「可能、應該、或許」。</li>
+            <li><b>✔ 允許主動留白：</b>缺乏資料時回答「【資料不足，無法確認】」。</li>
+            <li><b>兩步回答：</b>專家優化 ➔ 直接答覆繁體中文。</li>
+          </ul>
+        </div>
+        <div class="card danger" style="padding:5%">
+          <span class="tag" style="background:#fadbd8;color:#922b21">防線 ② 帳號與隱私檢查</span>
+          <h3 style="font-size:1.3em;color:var(--danger)">辨認帳號，關閉活動記錄</h3>
+          <ul style="font-size:0.92em;color:var(--muted);line-height:1.6">
+            <li><b>帳號辨認：</b>個人 Gmail（彈性自由） vs 教育帳號（受管政策）。</li>
+            <li><b>活動記錄關閉：</b>避免文字被工程師審查或模型訓練。</li>
+            <li><b>去識別化：</b>姓名學號必刪除，抽離特殊事件間接線索。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="btn-row" style="margin-top:0.8em">
+        ${jumpBtn("H01", "查看 G00-A 完整設定文字與複製")}
+        ${goBtn("⚙️ 直達 Gemini 個人化設定", R.personal, "mint")}
+        ${goBtn("🛡️ 直達活動記錄關閉設定", R.activity, "outline")}
+      </div>
+    `,
+    note: "強調：設定好 G00-A 之後，Gemini 就會終生記住『事實查核』習慣。"
+  },
+
+  // P05: 生活運用 ① Google Calendar
+  {
+    type: "stage", id: "P05", stage: 1, section: "生活運用｜日曆", time: "13:25–13:30",
+    title: "生活運用 ①｜Google Calendar 單筆活動添加",
+    body: `
+      <div class="cols three">
+        <div class="card" style="border-top:6px solid var(--blue)">
+          <span class="tag">步驟 01</span>
+          <h3 style="font-size:1.25em">先列文字預覽</h3>
+          <p class="big" style="color:var(--blue)">嚴禁直接建立！</p>
+          <p class="muted" style="font-size:0.88em">下達指令時，要求 Gemini 先條列出活動名稱、日期星期、起訖時間、地點及目標日曆。</p>
+        </div>
+        <div class="card accent" style="border-top:6px solid var(--mint)">
+          <span class="tag">步驟 02</span>
+          <h3 style="font-size:1.25em">人工核對授權</h3>
+          <p class="big" style="color:var(--mint)">教師親自檢查</p>
+          <p class="muted" style="font-size:0.88em">確認時間無誤、目標是測試日曆，才點擊確認建立。</p>
+        </div>
+        <div class="card warm" style="border-top:6px solid var(--gold)">
+          <span class="tag">步驟 03</span>
+          <h3 style="font-size:1.25em">回日曆抽查驗收</h3>
+          <p class="big" style="color:var(--gold)">完成閉環驗證</p>
+          <p class="muted" style="font-size:0.88em">開啟 Google Calendar 頁面，親眼確認行程已正確入格。</p>
+        </div>
+      </div>
+      <div class="btn-row" style="margin-top:0.8em">
+        ${jumpBtn("H02", "查看 P04 單筆日曆指令")}
+        ${goBtn("✨ 開啟 Gemini (@Google Calendar)", R.gemini)}
+        ${goBtn("📅 開啟 Calendar 抽查", R.calendar, "outline")}
+      </div>
+    `,
+    note: "解說先預覽再建立的安全觀念，準備進入動手做。"
+  },
+
+  // P06: 動手做 ①
+  {
+    type: "stage", id: "P06", stage: 1, section: "動手做 ①", time: "13:30–13:35",
+    title: "動手做 ①｜預覽並核對研習測試活動",
+    body: `
+      <div class="cols">
+        <div>
+          ${task(5, "① 點右方按鈕複製 P04 指令<br>② 在 Gemini 貼上並核對文字預覽<br>③ 確認無誤才授權建立", "能說出活動建在哪個日曆，並回 Calendar 看到活動")}
+        </div>
+        <div class="card" style="padding:5%">
+          <h3 style="font-size:1.3em">講師檢查點</h3>
+          <ul style="font-size:0.95em;color:var(--muted);line-height:1.6">
+            <li>是否看到了 Gemini 條列出的文字預覽？</li>
+            <li>目標日曆是否正確？</li>
+            <li>實際在 Google 日曆上看見這筆活動了嗎？</li>
+          </ul>
+          <div style="margin-top:auto">
+            ${jumpBtn("H02", "一鍵複製 P04 研習測試日曆指令")}
+          </div>
+        </div>
+      </div>
+    `,
+    note: "巡視全場，確認老師有看見文字預覽後再建立。"
+  },
+
+  // P07: 生活運用 ② 學校校曆 PDF
+  {
+    type: "stage", id: "P07", stage: 1, section: "生活運用｜校曆", time: "13:35–13:43",
+    title: "生活運用 ②｜Gemini Notebook 來源加入學校行事曆 PDF",
+    body: `
+      <div class="cols">
+        <div class="card" style="padding:5%">
+          <span class="tag">觀念 ① 建立獨立測試日曆</span>
+          <h3 style="font-size:1.3em">先建獨立日曆，課後一鍵清空</h3>
+          <p class="big" style="color:var(--blue)">保護原有行程，隔離練習資料</p>
+          <p class="muted" style="font-size:0.9em">在 Google 日曆新建「115-1 學校行事曆（測試）」，避免匯入整學期 50 筆資料時污染個人主日曆！</p>
+        </div>
+        <div class="card accent" style="padding:5%">
+          <span class="tag">觀念 ② 一站式交付 Prompt</span>
+          <h3 style="font-size:1.3em">生成 8 欄 CSV ＋ 匯入教學</h3>
+          <div style="background:var(--paper);padding:12px 14px;border-radius:10px;border-left:4px solid var(--gold);margin:0.5em 0">
+            <b style="color:var(--gold)">⚠️ 民國與西元跨年防坑重點：</b><br>
+            • 115 學年開學 ➔ <b>2026 年</b> 8 月<br>
+            • 寒假與學期末 ➔ <b>2027 年</b> 1 月（年份必須加一！）
+          </div>
+        </div>
+      </div>
+      <div class="btn-row" style="margin-top:0.8em">
+        ${jumpBtn("H03", "查看校曆轉 CSV 一站式指令 ＆ 匯入三步驟")}
+        ${goBtn("📄 下載台南高商 115-1 行事曆 PDF", R.pdf, "gold")}
+        ${goBtn("📓 開啟 NotebookLM 首頁", R.notebookHome, "mint")}
+      </div>
+    `,
+    note: "強調一站式 Prompt 的好處：AI 在生成檔案的同時，連匯入三步驟圖文指南一起給出。"
+  },
+
+  // P08: 動手做 ②
+  {
+    type: "stage", id: "P08", stage: 1, section: "動手做 ②", time: "13:43–13:55",
+    title: "動手做 ②｜學校行事曆轉 CSV 檔案與匯入",
+    body: `
+      <div class="cols">
+        <div>
+          ${task(7, "① 將校曆 PDF 加入 Notebook 來源<br>② 貼上一站式 Prompt 生成 CSV<br>③ 下載 CSV 並匯入「測試日曆」", "在 Google 日曆上看見開學與段考行程")}
+        </div>
+        <div class="card danger" style="padding:5%">
+          <span class="tag" style="background:#fadbd8;color:#922b21">匯入防呆大警示 🚨</span>
+          <h3 style="font-size:1.25em;color:var(--danger)">下拉選單切換至「測試日曆」</h3>
+          <p class="muted" style="font-size:0.9em;line-height:1.55">
+            在 Google 日曆設定「匯入」時，<b>「新增至日曆」務必切換為剛才建立的測試日曆</b>，千萬別直接匯入預設日曆！
+          </p>
+          <div style="margin-top:auto">
+            ${jumpBtn("H03", "一鍵複製行事曆轉 CSV 完整指令卡")}
+          </div>
+        </div>
+      </div>
+    `,
+    note: "啟動 7 分鐘計時！協助老師確認 CSV 下載成功並切換到測試日曆匯入。"
+  },
+
+  // P09: 班級經營運用
+  {
+    type: "stage", id: "P09", stage: 2, section: "班級經營", time: "13:55–14:02",
+    title: "班級經營運用｜Gemini Notebook 升學與常規查詢示範",
+    body: `
+      <div class="cols">
+        <div class="card" style="padding:5%">
+          <span class="tag">核心特色 ①</span>
+          <h3 style="font-size:1.3em">有來源資料為底，可靠可信</h3>
+          <p class="big" style="color:var(--blue)">「只查勾選的公開檔案，拒絕胡扯」</p>
+          <p class="muted" style="font-size:0.9em">將升學簡章、班級常規或安全實習規章載入筆記本，所有回答均基於實質文件。</p>
+        </div>
+        <div class="card accent" style="padding:5%">
+          <span class="tag">核心特色 ②</span>
+          <h3 style="font-size:1.3em">打開引用 [1]，一鍵回查原文</h3>
+          <p class="big" style="color:var(--mint)">「看得見出處的答案才安心」</p>
+          <p class="muted" style="font-size:0.9em">點擊回答末尾的引用數字標籤，左側文件自動跳轉至原始段落並高亮顯示！</p>
+        </div>
+      </div>
+      <div class="btn-row" style="margin-top:0.8em">
+        ${jumpBtn("H04", "查看升學管道示範問題與指令")}
+        ${goBtn("📓 開啟雄工化工科示範 Notebook", R.notebookChem, "mint")}
+      </div>
+    `,
+    note: "展示點擊引用數字 [1] 的瞬間高亮動畫，這是 NotebookLM 最具說服力的功能。"
+  },
+
+  // P10: 動手做 ③ (修改：學期成績不及格補救方式)
+  {
+    type: "stage", id: "P10", stage: 2, section: "動手做 ③", time: "14:02–14:10",
+    title: "動手做 ③｜用一處原文核對 AI 的回答",
+    body: `
+      <div class="cols">
+        <div>
+          ${task(4, "① 點開示範 Notebook<br>② 送出一個提問（例：學期成績不及格補救方式）<br>③ 點擊引用標籤 [1] 跳轉原文", "能指出一段原文，並核對回答是否符合")}
+        </div>
+        <div class="card warm" style="padding:5%">
+          <h3 style="font-size:1.3em">留白原則檢查</h3>
+          <p class="big" style="color:var(--gold)">「來源沒寫的，有沒有胡亂腦補？」</p>
+          <p class="muted" style="font-size:0.9em;line-height:1.55">
+            故意問一個檔案裡沒寫的事（例：下學期校外教學去哪？），看看 AI 是否會誠實回答「來源未提供」。
+          </p>
+          <div style="margin-top:auto">
+            ${jumpBtn("H04", "查看 H04 升學管道示範提問")}
+          </div>
+        </div>
+      </div>
+    `,
+    note: "4 分鐘實作，讓老師親身體驗『查證有據』與『誠實留白』。"
+  },
+
+  // P11: 教學運用 ① 英文段考出題
+  {
+    type: "stage", id: "P11", stage: 3, section: "教學命題", time: "14:10–14:18",
+    title: "教學命題運用｜Gemini Notebook 英文段考出題輔助",
+    body: `
+      <div class="cols">
+        <div class="card" style="padding:5%">
+          <span class="tag">來源與設定</span>
+          <h3 style="font-size:1.3em">課本教材為底，讓 AI 學你的風格</h3>
+          <ul style="font-size:0.92em;color:var(--muted);line-height:1.6">
+            <li>以<b>台南高商龍騰 B3 L5–L6</b> 為教材來源。</li>
+            <li>可準備自己過去出的題目，讓 AI 掌握難度與語氣。</li>
+            <li>鎖定技高程度（<b>CEFR A2–B1</b>），避免超綱。</li>
+          </ul>
+        </div>
+        <div class="card accent" style="padding:5%">
+          <span class="tag">產出規格</span>
+          <h3 style="font-size:1.3em">每題必備「五件套規格」</h3>
+          <ul style="font-size:0.92em;color:var(--muted);line-height:1.6">
+            <li><b>① 題幹</b>（非連續文本或情境短文）</li>
+            <li><b>② ABCD 選項</b> ＆ <b>③ 唯一預設答案</b></li>
+            <li><b>④ 教材來源引用 [1]</b> ＆ <b>⑤ 待教師查核處</b></li>
+          </ul>
+        </div>
+      </div>
+      <div class="btn-row" style="margin-top:0.8em">
+        ${jumpBtn("H05", "查看段考命題五件套指令")}
+        ${goBtn("📓 開啟南商龍騰段考出題 Notebook", R.notebookExam, "mint")}
+      </div>
+    `,
+    note: "進階應用說明：出完題後，同一本 Notebook 還能出補考、出課堂練習題、甚至做複習 Podcast。"
+  },
+
+  // P12: 動手做 ④
+  {
+    type: "stage", id: "P12", stage: 3, section: "動手做 ④", time: "14:18–14:26",
+    title: "動手做 ④｜產生 1–2 題素養閱讀題並保存草稿",
+    body: `
+      <div class="cols">
+        <div>
+          ${task(6, "① 開啟南商龍騰段考出題 Notebook<br>② 貼上命題指令，生成 1–2 題草稿<br>③ 複製保留這份草稿，等一下要審題！", "擁有一份包含五件套的試題草稿")}
+        </div>
+        <div class="card warm" style="padding:5%">
+          <h3 style="font-size:1.3em">審閱三問（自檢草稿）</h3>
+          <ul style="font-size:0.95em;color:var(--muted);line-height:1.6">
+            <li>教材真的支持這個唯一答案嗎？</li>
+            <li>其他干擾選項是否也可能說得通？</li>
+            <li>技高學生的閱讀程度是否合適？</li>
+          </ul>
+          <div style="margin-top:auto">
+            ${jumpBtn("H05", "一鍵複製段考出題完整指令")}
+          </div>
+        </div>
+      </div>
+    `,
+    note: "提醒老師一定要保留這份草稿！下一階段要交給 Skill 進行審題。"
+  },
+
+  // P13: 歷屆試題彩蛋
+  {
+    type: "stage", id: "P13", stage: 3, section: "題庫彩蛋", time: "14:26–14:31",
+    title: "考古題彩蛋｜統測真題嚴格篩選：目標單字必為唯一正解",
+    body: `
+      <div class="cols">
+        <div class="card accent" style="padding:5%">
+          <span class="tag">🎁 講師示範</span>
+          <h3 style="font-size:1.3em">統測 100–115 歷屆真題篩選</h3>
+          <p class="big" style="color:var(--mint)">「目標單字必須是該題唯一正確答案！」</p>
+          <p class="muted" style="font-size:0.9em">嚴格指令剔除僅作干擾選項的題目，一秒挑出該課單字在大考中真正作為正解的高含金量考題！</p>
+        </div>
+        <div class="card warm" style="padding:5%">
+          <span class="tag">🎁 學員加碼</span>
+          <h3 style="font-size:1.3em">學測 105–115 題庫上傳自己 Notebook</h3>
+          <p class="big" style="color:var(--gold)">打造全年度歷屆題庫大腦</p>
+          <p class="muted" style="font-size:0.9em">下載題庫 Markdown 檔 ➔ 上傳自己的 NotebookLM ➔ 貼上篩選 Prompt ➔ 打開引用直接回查原題出處。</p>
+        </div>
+      </div>
+      <div class="btn-row" style="margin-top:0.8em">
+        ${jumpBtn("H06", "查看真題篩選 Prompt ＆ 下載題庫")}
+        ${goBtn("📥 統測 100–115 真題.md", R.testbank)}
+        ${goBtn("📥 學測 105–115 真題.md", R.satbank, "mint")}
+      </div>
+    `,
+    note: "這是高職英文老師最有感的彩蛋，解決傳統翻歷屆試題翻到眼花的困擾。"
+  },
+
+  // P14: 內部初檢
+  {
+    type: "stage", id: "P14", stage: 3, section: "內部初檢", time: "14:31–14:35",
+    title: "出題內部初檢｜記事轉來源交叉查，非選題防洩題",
+    body: `
+      <div class="cols three">
+        <div class="card">
+          <span class="tag">初檢 ①</span>
+          <h3 style="font-size:1.25em">記事轉來源</h3>
+          <p class="big" style="color:var(--blue)">內部交叉審查</p>
+          <p class="muted" style="font-size:0.88em">將生成的試題記事<b>轉為來源</b>，讓 NotebookLM 用自身來源進行交叉核對。</p>
+        </div>
+        <div class="card danger">
+          <span class="tag" style="background:#fadbd8;color:#922b21">初檢 ② 防弊重點 🚨</span>
+          <h3 style="font-size:1.25em;color:var(--danger)">非選題防洩題</h3>
+          <p class="big" style="color:var(--danger)">檢查是否被劇透</p>
+          <p class="muted" style="font-size:0.88em">自動清查填空題或造句題答案，有沒有在前面閱讀題幹中直接出現！</p>
+        </div>
+        <div class="card accent">
+          <span class="tag">初檢 ③</span>
+          <h3 style="font-size:1.25em">誘答力與均勻度</h3>
+          <p class="big" style="color:var(--mint)">ABCD 分佈檢視</p>
+          <p class="muted" style="font-size:0.88em">檢查四個選項是否有合理誘答力，確認解答沒有偏向某一特定選項。</p>
+        </div>
+      </div>
+      <p class="muted" style="font-size:0.9em;margin-top:0.6em">初步自檢完成後，準備進入由獨立第三者把關的「段考審題 Skill」！</p>
+    `,
+    note: "說明防洩題的重要性：學生在非選題不會寫，就去前面閱讀文章找字抄，這就是出題破綻。"
+  },
+
+  // P15: 獨立審題 Skill
+  {
+    type: "stage", id: "P15", stage: 3, section: "獨立審題", time: "14:35–14:40",
+    title: "教學審題防線｜審題分兩步：Notebook 初檢，Skill 客觀複核",
+    body: `
+      <div class="flow" style="margin:2% 0">
+        <span><b>階段 ① 建立題號清冊</b><br><small>盤點題號、檢查缺頁缺圖與缺選項，不自行代補</small></span>
+        <i>→</i>
+        <span><b>階段 ② 多維度品質審查</b><br><small>客觀檢核「唯一最佳解」、CEFR 難度與誘答力</small></span>
+        <i>→</i>
+        <span><b>階段 ③ 輸出四欄修訂表</b><br><small>原題 ➔ 問題證據 ➔ 修訂題 ➔ 教師決定</small></span>
+      </div>
+      <div class="cols">
+        <div class="card accent" style="padding:4%">
+          <h3 style="font-size:1.2em">為什麼不能只讓出題的 AI 審題？</h3>
+          <p class="muted" style="font-size:0.9em">出題的 AI 傾向為自己的邏輯辯護。引進具備審題標準的獨立第三方 Skill，才能站在客觀角度挑出<b>「雙重正解」與「超綱爭議」</b>！</p>
+        </div>
+        <div class="card warm" style="padding:4%">
+          <h3 style="font-size:1.2em">留下教師查核決定</h3>
+          <p class="muted" style="font-size:0.9em">「原題 ／ 問題證據 ／ 修訂建議 ／ 教師決定」四欄對照，完整記錄採納與不採納之教學理由。</p>
+        </div>
+      </div>
+      <div class="btn-row" style="margin-top:0.8em">
+        ${jumpBtn("H07", "查看三大教師 Skills 雲端資料夾")}
+        ${goBtn("✨ 開啟 Gemini 執行審題", R.gemini, "mint")}
+      </div>
+    `,
+    note: "解說獨立審題的價值：這就是專業命題審查流程的數位化。"
+  },
+
+  // P16: 三個 Skill 與防呆 (修改：Zip檔案/資料夾)
+  {
+    type: "stage", id: "P16", stage: 3, section: "Skills 實戰", time: "14:40–14:45",
+    title: "Gem 過渡期善用 Skill｜三大教師專用技能 ＆ 上傳防呆",
+    body: `
+      <div class="cols three">
+        <div class="card">
+          <span class="tag">Skill 01</span>
+          <h3 style="font-size:1.25em">親師溝通王</h3>
+          <p class="muted" style="font-size:0.88em">Shirley 提供，張老師改編。<br>STAR-L 結構化起草，同理堅定，現場絕不直接發送。</p>
+        </div>
+        <div class="card accent">
+          <span class="tag">Skill 02</span>
+          <h3 style="font-size:1.25em">段考審題王</h3>
+          <p class="muted" style="font-size:0.88em">奕鈞老師提供，張老師改編。<br>四欄修訂對照表，專挑多重正解與超綱難度。</p>
+        </div>
+        <div class="card warm">
+          <span class="tag">Skill 03</span>
+          <h3 style="font-size:1.25em">英文作文對話批改</h3>
+          <p class="muted" style="font-size:0.88em">阿集教室＋奕鈞老師提供，張老師改編。<br>形成性教學回饋，保留原意，不打分數。</p>
+        </div>
+      </div>
+      <div class="card danger" style="margin-top:1.2%;padding:14px 20px;border-left:8px solid var(--danger)">
+        <b style="color:var(--danger);font-size:1.15em">🚨 Gemini 技能建立重要防呆步驟：</b>
+        <span style="font-size:1.05em;font-weight:800;color:var(--ink)">
+          Gemini ➔ 自訂 ➔ 技能 ➔ 建立 ➔ <span style="background:#fadbd8;color:#922b21;padding:2px 8px;border-radius:6px">【上傳】（一定要特別提醒選擇「Zip 檔案／資料夾」！）</span>
+        </span>
+      </div>
+      <div class="btn-row" style="margin-top:0.6em">
+        ${jumpBtn("H07", "前往下載三大 Skills 資料夾與建立教學")}
+        ${goBtn("⚙️ 直達 Gemini 自訂技能建立頁面", R.customSkillsUrl, "mint")}
+      </div>
+    `,
+    note: "特別強調：Gemini 建立 Skill 時，一定要點選『上傳』按鈕，上傳 Zip 檔案或資料夾！"
+  },
+
+  // P17: 動手做 ⑤ (新增：三大 Skills 10 分鐘實作測試)
+  {
+    type: "stage", id: "P17", stage: 3, section: "動手做 ⑤", time: "14:45–14:55",
+    title: "動手做 ⑤｜三大 Skills 實作測試（10 分鐘）",
+    body: `
+      <div class="cols">
+        <div>
+          ${task(10, `<b>【流程】</b>進入 Gemini 自訂技能 ➔ 點選「建立」➔ <b>【上傳】三個 Skills（Zip 檔案／資料夾）</b><br><br>
+<b>【實測三選一】</b><br>
+① 拿學生作文 ➔ 跑「英文作文對話批改」<br>
+② <b>段考卷審題，拼字總分答案分配核對</b> ➔ 跑「段考審題王」<br>
+③ <b>通知家長學生作弊</b> ➔ 跑「親師溝通王」STAR-L 擬稿`, "成功上傳至少 1 個 Skill 並完成一次情境測試")}
+        </div>
+        <div class="card warm" style="padding:4.5%">
+          <h3 style="font-size:1.25em">實作與查核心法</h3>
+          <ul style="font-size:0.9em;color:var(--muted);line-height:1.6">
+            <li><b>作弊情境：</b>語氣需同理堅定，提供客觀事實，切勿直接情緒宣洩。</li>
+            <li><b>段考審題：</b>重點核對總分加總、拼字有無失誤、ABCD 答案分佈。</li>
+            <li><b>作文批改：</b>先稱讚亮點、再給引導提問，不直接改掉學生原意。</li>
+          </ul>
+          <div style="margin-top:auto">
+            ${jumpBtn("H07", "前往 H07 查看三大 Skills 資料夾下載")}
+          </div>
+        </div>
+      </div>
+    `,
+    note: "10 分鐘實作大高潮！巡視確認每位老師都完成至少一個 Skill 的上傳與情境測試。"
+  },
+
+  // P18: 彩蛋 GAS 一鍵寄成績
+  {
+    type: "stage", id: "P18", stage: 4, section: "進階彩蛋", time: "14:55–14:58",
+    title: "進階彩蛋｜Gemini Canvas 協助設計 GAS：一鍵寄發學生成績",
+    body: `
+      <div class="cols">
+        <div class="card accent" style="padding:5%">
+          <span class="tag" style="background:#d4eee9;color:var(--mint)">自動化工作流</span>
+          <h3 style="font-size:1.35em">試算表成績 ➔ 自動發信至學生信箱</h3>
+          <p class="big" style="color:var(--mint)">「告別傳統一張一張撕成績條的繁瑣工作！」</p>
+          <ul style="font-size:0.92em;color:var(--muted);line-height:1.6">
+            <li>利用 <b>Gemini Canvas</b> 讓 AI 為你的試算表欄位量身打造 Apps Script。</li>
+            <li>一鍵群發個別化成績單、平時表現回饋與評語。</li>
+            <li>張老師已備妥完整講義與教學影片，點擊直達！</li>
+          </ul>
+        </div>
+        <div class="card warm" style="padding:5%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center">
+          <span class="tag" style="background:#fdebd0;color:#b9770e">講義與影片資源</span>
+          <h3 style="font-size:1.35em;color:var(--gold);margin:0.4em 0">完整教學講義與示範影片</h3>
+          <p class="muted" style="font-size:0.92em;margin-bottom:1em">張老師親自錄製的完整步驟指引，課後直接複製即可套用。</p>
+          ${goBtn("📖 開啟張老師 GAS 寄成績講義與影片", R.gasDoc, "gold")}
+        </div>
+      </div>
+      <div class="btn-row" style="margin-top:0.8em">
+        ${jumpBtn("H08", "查看 Gemini Canvas 提示詞與示範程式碼")}
+      </div>
+    `,
+    note: "向老師介紹這份精美講義：只要有 Google 試算表，就能用 AI 寫程式搞定班級自動化！"
+  },
+
+  // P19: Call to Action & 結語
+  {
+    type: "stage", id: "P19", stage: 4, section: "結語與行動", time: "14:58–15:00",
+    title: "Call to Action｜三個實踐行動 ＆ 研習結語",
+    body: `
+      <div class="cols three">
+        <div class="card" style="border-top:6px solid var(--blue);padding:4.5%">
+          <span class="tag">行動一</span>
+          <h3 style="font-size:1.3em">整理一夾</h3>
+          <p class="big" style="color:var(--blue)">「AI 教學實作」資料夾</p>
+          <p class="muted" style="font-size:0.86em">• 01_可公開來源<br>• 02_提示詞與設定<br>• 03_教師查核成果</p>
+        </div>
+        <div class="card accent" style="border-top:6px solid var(--mint);padding:4.5%">
+          <span class="tag">行動二</span>
+          <h3 style="font-size:1.3em">完成一條</h3>
+          <p class="big" style="color:var(--mint)">跑完一次完整工作流</p>
+          <p class="muted" style="font-size:0.86em"><b>「來源 ➔ Prompt ➔ AI 初稿 ➔ 教師查核」</b>，在日曆、命題或親師溝通擇一跑完。</p>
+        </div>
+        <div class="card warm" style="border-top:6px solid var(--gold);padding:4.5%">
+          <span class="tag">行動三</span>
+          <h3 style="font-size:1.3em">加入一處</h3>
+          <p class="big" style="color:var(--gold)">七天內試做一次</p>
+          <p class="muted" style="font-size:0.86em">加入共學社群（LINE / GEG Taiwan FB），在研習後一週內完成第一次微實踐。</p>
+        </div>
+      </div>
+      <p class="huge" style="text-align:center;margin:0.35em 0;line-height:1.3">
+        「AI 取代不了人師，但可以協助我們減少重複整理，<br><span style="color:var(--mint)">把時間留給引導、回饋與陪伴。</span>」
+      </p>
+      <div class="btn-row" style="justify-content:center;margin-top:0.4em">
+        ${goBtn("📂 台南高商研習主資料夾", R.root, "mint")}
+        ${goBtn("💬 研習在這兒 LINE 社群", R.lineGroup, "gold")}
+        ${goBtn("👥 GEG Taiwan 呷飽沒 FB", R.gegFb, "outline")}
+      </div>
+    `,
+    note: "結語致謝！把時間留給陪伴，AI 做第一稿，人師做導演。"
+  },
+
+  // P20: Q&A 與 AI科技學習影音資源 (新增最後一頁)
+  {
+    type: "stage", id: "P20", stage: 4, section: "課後延伸", time: "課後交流",
+    title: "Q & A 交流 ＆ AI 科技學習影音資源",
+    body: `
+      <div class="cols four">
+        <div class="card" style="padding:4%">
+          <span class="tag" style="background:#e1f0fa;color:var(--blue)">英語教學與實戰</span>
+          <h3 style="font-size:1.2em">李偉綾 Shirley Li</h3>
+          <p class="muted" style="font-size:0.86em">Gemini × NotebookLM 英語教學、課堂活動與實戰指南。</p>
+          <div style="margin-top:auto">
+            ${goBtn("📺 前往頻道", R.ytShirley, "mint")}
+          </div>
+        </div>
+        <div class="card accent" style="padding:4%">
+          <span class="tag" style="background:#d4eee9;color:var(--mint)">AI Agent 講解影音</span>
+          <h3 style="font-size:1.2em">三師爸 Sense Bar</h3>
+          <p class="muted" style="font-size:0.86em">全自動 AI 動畫影片、HeyGen、教師自動化技能與工作流。</p>
+          <div style="margin-top:auto">
+            ${goBtn("🎬 前往頻道", R.ytSanshiba, "gold")}
+          </div>
+        </div>
+        <div class="card warm" style="padding:4%">
+          <span class="tag" style="background:#fdebd0;color:#b9770e">教育科技與簡報</span>
+          <h3 style="font-size:1.2em">茶米老師教室</h3>
+          <p class="muted" style="font-size:0.86em">當 Google 簡報加上 Gemini、教育科技創新與工具整合實作。</p>
+          <div style="margin-top:auto">
+            ${goBtn("💻 前往頻道", R.ytChami, "outline")}
+          </div>
+        </div>
+        <div class="card" style="padding:4%">
+          <span class="tag">AI 工具應用</span>
+          <h3 style="font-size:1.2em">褚煜凱 老師</h3>
+          <p class="muted" style="font-size:0.86em">前瞻教育科技、AI 教學工具應用與教師實用科技分享。</p>
+          <div style="margin-top:auto">
+            ${goBtn("✨ 前往頻道", R.ytChuyk, "mint")}
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:1%;padding:10px 18px;background:var(--paper);border-left:6px solid var(--blue);display:flex;flex-direction:row;justify-content:space-between;align-items:center">
+        <div>
+          <b>💬 現場提問與課後交流時間：</b>
+          <span class="muted" style="font-size:0.9em">若有未及回答的個別問題，歡迎寄信至 <a href="mailto:t508@ksvs.kh.edu.tw" style="color:var(--blue);font-weight:700">t508@ksvs.kh.edu.tw</a></span>
+        </div>
+        ${goBtn("✉️ 寄信給講師", "mailto:t508@ksvs.kh.edu.tw", "outline")}
+      </div>
+    `,
+    note: "研習圓滿落幕！推薦老師追蹤這四位優質創作者，課後自主延伸學習。"
+  },
+
+  // --------------------------------------------------------------------------
+  // PART 2: 學員實作講義與 Prompt 卡片庫 (H01 ~ H08)
+  // --------------------------------------------------------------------------
+  // H01: G00-A
+  {
+    type: "handout", id: "H01", returnTarget: "P04", returnLabel: "總體指引與隱私防線",
+    title: "學員講義 H01｜G00-A 張老師原設定（繁體中文 事實查核與兩步優化）",
+    body: `
+      ${returnBar("P04", "總體指引與隱私防線")}
+      <p class="muted" style="font-size:0.9em;margin-bottom:0.4em">請至 <b>Gemini 右上角頭像 ➔ 設定 ➔ 個人化設定</b>，將以下完整文字貼入「您希望 Gemini 如何回覆？」框中：</p>
+      ${promptCard("prompt_g00a", `在回答任何問題之前，請嚴格執行以下流程：
+
+【內部事實查核原則】
+1. 證據優先：僅依據確切已知的事實回答，嚴禁使用「可能、應該、或許」等模糊推測。
+2. 允許留白：如果信心水準低於 90% 或缺乏確切資訊，請直接回答：「【資料不足，無法確認】」。
+3. 來源標註：涉及具體數據、法規或學術分類時，請標註參考來源或推論邏輯。
+
+【回答執行步驟】
+第一步：專家優化。你是一名深耕 AI 領域的顧問，專精於提示詞優化。收到我的問題時，請先將其轉化為更精確、能讓模型發揮最高效能的指令，包含「角色任務、背景資訊、具體指令、約束條件」四個維度；規定字數、格式、語氣，且使用正向表述。
+第二步：直接答覆。優化完成後，立即依照優化後的指令答覆，產出最終內容，一律使用繁體中文。`)}
+    `
+  },
+
+  // H02: P04 日曆指令
+  {
+    type: "handout", id: "H02", returnTarget: "P06", returnLabel: "動手做 ① 預覽測試活動",
+    title: "學員講義 H02｜P04 單筆活動 Google Calendar 添加與預覽指令",
+    body: `
+      ${returnBar("P06", "動手做 ① 預覽測試活動")}
+      <p class="muted" style="font-size:0.9em;margin-bottom:0.4em">在 Gemini 對話框輸入 <code>@Google Calendar</code>，接著貼入以下提示詞送出：</p>
+      ${promptCard("prompt_p04", `@Google Calendar 請準備一項「研習測試」活動：
+時間：下週三上午 10:00 至 12:00
+地點：台南高商誠信樓電腦教室
+時區：Asia/Taipei
+
+請嚴格遵守以下流程：
+1. 先為我列出「活動名稱、日期星期、開始至結束時間、地點及目標日曆」文字預覽供我確認。
+2. 資訊完整且等我回覆「確認建立」後才真正建立至日曆。
+3. 建立後回報實際執行結果；若無法建立，請提供完整的活動資料清單。`)}
+    `
+  },
+
+  // H03: 校曆轉 CSV 一站式指令
+  {
+    type: "handout", id: "H03", returnTarget: "P08", returnLabel: "動手做 ② 校曆轉 CSV 匯入",
+    title: "學員講義 H03｜校曆轉 Google 日曆 CSV 一站式指令 ＆ 匯入三步驟",
+    body: `
+      ${returnBar("P08", "動手做 ② 校曆轉 CSV 匯入")}
+      <div class="cols">
+        <div>
+          <p class="muted" style="font-size:0.86em;margin-bottom:4px">請先將「學校行事曆 PDF」加入 Notebook 來源，複製此指令貼入對話框：</p>
+          ${promptCard("prompt_cal_csv", `請依據我上傳的學校行事曆 PDF，協助我完成「行事曆轉 Google 日曆」的任務：
+
+【任務一：生成 Google 日曆標準 CSV 檔案】
+請直接在右側工作室（Studio）為我生成並儲存一個 CSV 檔案，檔名命名為：學校115-1行事曆.csv。
+檔案格式規範：
+1. 嚴格包含以下 8 個標準欄位：
+Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location
+2. 填寫規則：
+- Subject：請保留處室標籤與活動名稱（例如：[教務處] 第一次期中考）。
+- Start Date / End Date：一律轉換為西元格式「YYYY/MM/DD」（如 2026/10/13；116年1月跨年請換算為 2027/01/xx）。
+- Start Time / End Time：全天事件請留空。
+- All Day Event：一律填寫 True。
+- Description：若原文有備註時間、對象或節次，請填入此欄。
+- Location：若有註明地點則填入，無則留空。
+3. 請依週次完整整理，切勿省略中間週次。
+
+【任務二：日曆匯入教學指引】
+檔案生成後，請在回覆中列出「建立獨立測試日曆」與「匯入 CSV」的三步驟圖文說明。`)}
+        </div>
+        <div class="card" style="padding:4.5%;font-size:0.88em;line-height:1.55">
+          <h3 style="font-size:1.15em;margin-top:0">🎓 老師操作三步驟指引</h3>
+          <p><b>步驟 1：建立專屬「測試日曆」</b><br>
+          路徑：Google 日曆左側「其他日曆」旁的 <b>＋</b> ➔ 點選「建立新日曆」➔ 名稱輸入「115-1 學校行事曆（測試）」➔ 點選「建立日曆」。</p>
+          <p><b>步驟 2：下載檔案並匯入</b><br>
+          在 Notebook 右側工作室下載 <code>學校115-1行事曆.csv</code> ➔ 前往 Google 日曆右上角「設定」➔ 左側「匯入和匯出」➔ 選擇檔案 ➔ <b style="color:var(--danger)">下拉選單務必切換為剛建立的「測試日曆」</b> ➔ 點擊匯入。</p>
+          <p><b>步驟 3：抽查驗證</b><br>
+          切換至 9 月開學週、10 月段考週抽查 2～3 筆，確認日期與處室正確顯示。</p>
+        </div>
+      </div>
+    `
+  },
+
+  // H04: 升學管道提問 (修改：兩大升學提問)
+  {
+    type: "handout", id: "H04", returnTarget: "P10", returnLabel: "動手做 ③ 原文引用回查",
+    title: "學員講義 H04｜Gemini Notebook 升學管道示範提問與留白檢核",
+    body: `
+      ${returnBar("P10", "動手做 ③ 原文引用回查")}
+      <p class="muted" style="font-size:0.9em;margin-bottom:0.4em">開啟「升學簡章或示範 Notebook」，可貼入以下兩大升學實戰提問測試來源引用：</p>
+      ${promptCard("prompt_admission", `請依據我選取的資料來源，回答以下升學管道相關問題：
+
+1. 哪些升學管道必須看學習歷程檔案？
+2. 只看統測成績的升學管道有哪些？
+
+回答規範：
+• 請針對每項回答逐點列出，並標註具體的資料來源引用編號 [1]。
+• 若來源中未提及，請明確標示「【資料來源未提及】」，不要擅自推測。`)}
+      <div class="btn-row" style="margin-top:0.8em">
+        ${goBtn("📓 開啟雄工化工科示範 Notebook", R.notebookChem, "mint")}
+      </div>
+    `
+  },
+
+  // H05: 英文段考出題
+  {
+    type: "handout", id: "H05", returnTarget: "P12", returnLabel: "動手做 ④ 段考出題草稿",
+    title: "學員講義 H05｜英文段考五件套命題指令（龍騰 B3 L5–L6）",
+    body: `
+      ${returnBar("P12", "動手做 ④ 段考出題草稿")}
+      <p class="muted" style="font-size:0.9em;margin-bottom:0.4em">開啟「台南高商龍騰段考出題 Notebook」，貼入以下五件套命題指令：</p>
+      ${promptCard("prompt_exam", `請只根據我選取的龍騰 B3 L5–L6 來源資料，為技術型高級中等學校（技高）學生設計 1–2 題非連續文本素養閱讀測驗題（附圖表或比較資訊）：
+
+每題必須完整包含以下五件套欄位：
+1. 【題幹情境】：貼近技高生活或職場情境之英文短文與圖表資訊。
+2. 【完整選項】：包含 (A)(B)(C)(D) 四個選項，誘答選項需具備合理性。
+3. 【唯一預設答案】：明確標示正確選項，必須具備排他性。
+4. 【教材來源引用標籤】：具體指出依據課本哪一頁哪一段。
+5. 【待教師查核處】：指出此題難度、考點單字及建議教師複核的重點。
+
+語言程度限制：嚴格限制在 CEFR A2–B1 範圍內。`)}
+      <div class="btn-row" style="margin-top:0.8em">
+        ${goBtn("📓 開啟南商龍騰段考出題 Notebook", R.notebookExam, "mint")}
+      </div>
+    `
+  },
+
+  // H06: 統測真題篩選
+  {
+    type: "handout", id: "H06", returnTarget: "P13", returnLabel: "考古題彩蛋",
+    title: "學員講義 H06｜統測真題嚴格篩選指令 ＆ 題庫下載",
+    body: `
+      ${returnBar("P13", "考古題彩蛋")}
+      <p class="muted" style="font-size:0.9em;margin-bottom:0.4em">在已上傳歷屆試題 Markdown 的筆記本中，貼入以下篩選指令：</p>
+      ${promptCard("prompt_testbank", `請檢索《統測 100–115 歷屆試題》來源，搜尋與龍騰第三冊第五課單字相關的歷屆試題：
+
+篩選規則：
+1. 目標單字必須是該題的「唯一正確答案」，請剔除僅將單字作為干擾選項的題目！
+2. 輸出格式請包含：年度、題號、題目原文、四個選項、正確解答、以及考點解析。
+3. 每一題附上原始 Markdown 文件之出處引用標籤。`)}
+      <div class="btn-row" style="margin-top:0.8em">
+        ${goBtn("📥 下載《統測 100–115 歷屆試題.md》", R.testbank)}
+        ${goBtn("📥 下載《學測 105–115 歷屆試題.md》", R.satbank, "mint")}
+      </div>
+    `
+  },
+
+  // H07: 三大 Skills 下載與建立
+  {
+    type: "handout", id: "H07", returnTarget: "P17", returnLabel: "動手做 ⑤ Skills 實測",
+    title: "學員講義 H07｜三大教師 Skills 資料夾 ＆ 自訂上傳（Zip檔案／資料夾）",
+    body: `
+      ${returnBar("P17", "動手做 ⑤ Skills 實測")}
+      <div class="cols">
+        <div class="card" style="padding:5%">
+          <span class="tag">雲端資源下載</span>
+          <h3 style="font-size:1.25em">張老師整理的三大 Skills 資料夾</h3>
+          <ul style="font-size:0.92em;color:var(--muted);line-height:1.6">
+            <li><b>親師溝通王</b>（Shirley 提供，張老師改編）</li>
+            <li><b>段考審題王</b>（奕鈞老師提供，張老師改編）</li>
+            <li><b>英文作文對話批改</b>（阿集教室＋奕鈞老師提供，張老師改編）</li>
+          </ul>
+          <div style="margin-top:auto">
+            ${goBtn("📂 開啟張老師 Skills 雲端資料夾", R.skillsFolder, "gold")}
+          </div>
+        </div>
+        <div class="card danger" style="padding:5%">
+          <span class="tag" style="background:#fadbd8;color:#922b21">建立操作指引 🚨</span>
+          <h3 style="font-size:1.25em;color:var(--danger)">建立路徑：務必點選「上傳」</h3>
+          <ol style="font-size:0.92em;color:var(--ink);line-height:1.6">
+            <li>進入 Gemini 左側選單 ➔ <b>「Gems / 技能」</b></li>
+            <li>點擊右上角<b>「建立新技能」</b></li>
+            <li>在建立視窗中，點擊<b>「上傳技能 (Upload)」</b>並選取下載的 <b>Zip 檔案或資料夾</b>！</li>
+          </ol>
+          <div style="margin-top:auto">
+            ${goBtn("⚙️ 直達 Gemini 自訂技能建立頁面", R.customSkillsUrl, "mint")}
+          </div>
+        </div>
+      </div>
+    `
+  },
+
+  // H08: GAS 寄成績
+  {
+    type: "handout", id: "H08", returnTarget: "P18", returnLabel: "彩蛋 GAS 一鍵寄成績",
+    title: "學員講義 H08｜Gemini Canvas 設計 GAS code 一鍵寄發學生成績",
+    body: `
+      ${returnBar("P18", "彩蛋 GAS 一鍵寄成績")}
+      <div class="cols">
+        <div class="card accent" style="padding:4.5%">
+          <span class="tag">張老師完整講義</span>
+          <h3 style="font-size:1.3em">完整教學講義與影片指南</h3>
+          <p class="muted" style="font-size:0.9em;line-height:1.6">
+            本單元完整圖文操作手冊、步驟截圖與錄影教學已整理於 Google 文件中，點擊下方即可直接研讀：
+          </p>
+          <div style="margin-top:1em">
+            ${goBtn("📖 開啟張老師 GAS 寄成績完整講義與影片", R.gasDoc, "gold")}
+          </div>
+        </div>
+        <div>
+          <p class="muted" style="font-size:0.86em;margin-bottom:4px">在 Gemini 貼入以下 Prompt，讓 Canvas 自動寫出 GAS：</p>
+          ${promptCard("prompt_gas", `請在 Canvas 中為我撰寫一段 Google Apps Script (GAS) 程式碼：
+
+任務情境：
+我有一張 Google 試算表，記錄班級英文段考成績。
+試算表欄位包含：
+A欄：座號
+B欄：姓名
+C欄：學生 Email
+D欄：閱讀測驗得分
+E欄：寫作得分
+F欄：總分
+G欄：教師個別化回饋建議
+
+功能需求：
+1. 建立一個自訂選單「成績通知 ➔ 一鍵寄送個別成績」。
+2. 逐行讀取試算表資料，自動將該學生的各項分數與教師評語組合為排版精美的 Email 內容。
+3. 使用 GmailApp.sendEmail 發送至學生的 Email。
+4. 寄出後在 H 欄自動標註「已寄送」與時間戳記，避免重複寄送。`)}
+        </div>
+      </div>
+    `
+  }
+];
+
+// ============================================================================
+// ENGINE & NAVIGATION
+// ============================================================================
+let current = 0;
+let pen = false;
+const speakerMode = new URLSearchParams(location.search).has("presenter");
+
+function getSlideIndexById(id) {
+  if (!id) return -1;
+  const clean = String(id).trim().toUpperCase();
+  // 1. Direct match (e.g. "P04", "H01")
+  let idx = slides.findIndex(s => s.id.toUpperCase() === clean);
+  if (idx !== -1) return idx;
+  // 2. Pure digits (e.g. "4" or "04" -> "P04")
+  if (/^\d+$/.test(clean)) {
+    const pId = "P" + clean.padStart(2, "0");
+    idx = slides.findIndex(s => s.id.toUpperCase() === pId);
+    if (idx !== -1) return idx;
+  }
+  return -1;
+}
+
+function jumpTo(id) {
+  const idx = getSlideIndexById(id);
+  if (idx !== -1) {
+    show(idx);
+  }
+}
+
+function slideHTML(s, i) {
+  const isHandout = s.type === "handout";
+  const stage = s.stage ?? 0;
+  const phase = stage === 0 ? "引起動機" : (stage === 4 ? "喚起行動" : "維持注意");
+  const eyebrowText = isHandout 
+    ? `📖 學員實作講義庫 · ${s.id}` 
+    : `📽️ ${s.id}／P20　${phase} · ${s.section}　${s.time}`;
+
+  return `
+    <article class="slide" data-index="${i}" data-id="${s.id}">
+      <div class="eyebrow-row">
+        <span class="eyebrow">${eyebrowText}</span>
+        ${s.type === "stage" && stageToHandoutMap[s.id] ? `<button type="button" class="jump-pill" onclick="jumpTo('${stageToHandoutMap[s.id]}')">📋 查看學員講義 ➔</button>` : ""}
+      </div>
+      <h2>${s.title}</h2>
+      <div class="body">${s.body}</div>
+      ${!isHandout ? `
+        <div class="road-progress" aria-label="研習路線：${route[stage][0]}">
+          ${route.map((x, j) => `
+            <div class="road-seg ${j < stage ? "done" : (j === stage ? "current" : "")}" onclick="jumpTo('${stageTargets[j]}')" title="${x[0]}">
+              <span>0${j + 1} ${x[0]}</span>
+              <span>${j < stage ? "✓" : (j === stage ? "●" : "○")}</span>
+            </div>
+          `).join("")}
+        </div>
+      ` : ""}
+      <div class="footer">
+        <span>臺南高商 AI 研習｜張秋芸（misszhang0119）｜2026.11.24</span>
+        <b>${isHandout ? "附錄講義庫 · 一鍵複製與詳細指南" : `${route[stage][0]} · 來源 ➔ Prompt ➔ 草稿 ➔ 查核 ➔ 保存`}</b>
+      </div>
+      <canvas class="drawing-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:10"></canvas>
+    </article>
+  `;
+}
+
+function render() {
+  document.getElementById("stage").innerHTML = slides.map(slideHTML).join("");
+  
+  // Build TOC
+  let tocHTML = `<h3>📽️ 台上極簡投影 (P01–P20)</h3>`;
+  slides.filter(s => s.type === "stage").forEach(s => {
+    tocHTML += `<button type="button" onclick="jumpTo('${s.id}')"><b>${s.id}</b> ${s.title}</button>`;
+  });
+  tocHTML += `<h3 style="margin-top:14px">📖 學員指令講義 (H01–H08)</h3>`;
+  slides.filter(s => s.type === "handout").forEach(s => {
+    tocHTML += `<button type="button" onclick="jumpTo('${s.id}')" style="background:#fff3df;color:#9a5406"><b>${s.id}</b> ${s.title.replace("學員講義 " + s.id + "｜", "")}</button>`;
+  });
+  document.getElementById("toc").innerHTML = tocHTML;
+
+  show(0, false);
+  setupDrawing();
+}
+
+function show(n, broadcast = true) {
+  current = Math.max(0, Math.min(slides.length - 1, n));
+  const s = slides[current];
+  if (s.type === "stage") {
+    lastStageId = s.id;
+  }
+  document.querySelectorAll(".slide").forEach((el, i) => el.classList.toggle("active", i === current));
+  
+  // Update counter
+  const counterEl = document.getElementById("counter");
+  if (s.type === "stage") {
+    counterEl.textContent = `投影 ${s.id} / P20`;
+    counterEl.style.color = "#8de2d0";
+  } else {
+    counterEl.textContent = `講義 ${s.id} / H08`;
+    counterEl.style.color = "#ffbe4d";
+  }
+
+  document.getElementById("toc").classList.remove("open");
+  if (broadcast) {
+    try { history.replaceState(null, "", `#slide-${s.id}`); } catch (e) {}
+  }
+  updateSpeaker();
+}
+
+function updateSpeaker() {
+  const s = slides[current];
+  const next = slides[current + 1];
+  const speakerEl = document.getElementById("speaker");
+  if (!speakerEl) return;
+  speakerEl.innerHTML = `
+    <div class="panel">
+      <h1>講師控場視窗｜${s.id}（${s.type === "stage" ? "台上投影" : "學員講義"}）</h1>
+      <h2>${s.title}</h2>
+      <p class="clock" id="wallClock"></p>
+      <p>建議時段：${s.time || "講義附錄"}</p>
+      <p style="font-size:18px;color:#d4eee9"><b>講師心法：</b>${s.note || "學員操作指引卡，供學員自學或現場複製指令。"}</p>
+      <div style="margin-top:16px">
+        <button type="button" onclick="show(current-1)">← 上一頁</button>
+        <button type="button" onclick="show(current+1)">下一頁 →</button>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>下一頁預覽</h2>
+      <div style="background:#154557;padding:15px;border-radius:12px">
+        ${next ? `<h3>${next.id}：${next.title}</h3><p>${next.section || "附錄"}｜${next.time || ""}</p>` : "研習結束"}
+      </div>
+    </div>
+  `;
+}
+
+function setupDrawing() {
+  document.querySelectorAll("canvas").forEach(c => {
+    const resize = () => {
+      const rect = c.getBoundingClientRect();
+      const ratio = window.devicePixelRatio || 1;
+      if (rect.width && rect.height) {
+        c.width = rect.width * ratio;
+        c.height = rect.height * ratio;
+        c.getContext("2d").scale(ratio, ratio);
+      }
+    };
+    resize();
+    let drawing = false;
+    const ctx = c.getContext("2d");
+    c.addEventListener("pointerdown", e => {
+      if (!pen) return;
+      drawing = true;
+      c.setPointerCapture(e.pointerId);
+      ctx.beginPath();
+      ctx.moveTo(e.offsetX, e.offsetY);
+    });
+    c.addEventListener("pointermove", e => {
+      if (!drawing) return;
+      ctx.strokeStyle = "#d8303d";
+      ctx.lineWidth = 4;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.stroke();
+    });
+    c.addEventListener("pointerup", () => drawing = false);
+  });
+}
+
+// Global Click Handlers
+document.addEventListener("click", e => {
+  // Copy button
+  const copyBtn = e.target.closest("[data-copy]");
+  if (copyBtn) {
+    const textEl = document.getElementById(copyBtn.dataset.copy);
+    if (textEl) {
+      navigator.clipboard.writeText(textEl.textContent).then(() => {
+        const orig = copyBtn.textContent;
+        copyBtn.textContent = "✔ 已成功複製！";
+        copyBtn.style.background = "#0c7d78";
+        setTimeout(() => { copyBtn.textContent = orig; copyBtn.style.background = ""; }, 1800);
+      });
+    }
+    return;
+  }
+
+  // Timer button
+  if (e.target.classList.contains("startTimer")) {
+    const card = e.target.closest(".task-card");
+    const timerDisplay = card.querySelector(".timer");
+    if (timerDisplay._interval) {
+      clearInterval(timerDisplay._interval);
+      timerDisplay._interval = null;
+      e.target.textContent = "▶ 繼續倒數";
+      return;
+    }
+    let left = timerDisplay._left ?? (+timerDisplay.dataset.minutes * 60);
+    e.target.textContent = "⏸ 暫停";
+    timerDisplay._interval = setInterval(() => {
+      left = Math.max(0, left - 1);
+      timerDisplay._left = left;
+      const m = Math.floor(left / 60);
+      const s = left % 60;
+      timerDisplay.textContent = `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+      if (!left) {
+        clearInterval(timerDisplay._interval);
+        timerDisplay._interval = null;
+        timerDisplay.style.color = "#ffd8a6";
+        e.target.textContent = "✔ 時間到！";
+      }
+    }, 1000);
+  }
+});
+
+// Controls Handlers
+document.getElementById("prev").onclick = () => show(current - 1);
+document.getElementById("next").onclick = () => show(current + 1);
+document.getElementById("tocBtn").onclick = () => document.getElementById("toc").classList.toggle("open");
+document.getElementById("roadBtn").onclick = () => jumpTo("P03");
+document.getElementById("fullBtn").onclick = () => document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+document.getElementById("themeBtn").onclick = () => document.body.classList.toggle("dark-mode");
+document.getElementById("speakerBtn").onclick = () => {
+  const u = new URL(location.href);
+  u.searchParams.set("presenter", "1");
+  window.open(u.href, "speaker-win", "width=1100,height=750");
+};
+document.getElementById("drawBtn").onclick = () => {
+  pen = !pen;
+  document.querySelectorAll("canvas").forEach(c => c.style.pointerEvents = pen ? "auto" : "none");
+  document.getElementById("drawBtn").style.background = pen ? "#b2273b" : "";
+};
+document.getElementById("clearBtn").onclick = () => {
+  const c = document.querySelectorAll("canvas")[current];
+  if (c) c.getContext("2d").clearRect(0, 0, c.width, c.height);
+};
+
+// Smart Toggle between Stage & Handout (H key & button)
+function toggleSection() {
+  const s = slides[current];
+  if (s.type === "stage") {
+    // Jump to the specific handout mapped to this stage
+    const targetH = stageToHandoutMap[s.id] || "H01";
+    jumpTo(targetH);
+  } else {
+    // Return to the last visited stage or default mapped stage
+    const targetP = lastStageId || handoutToStageMap[s.id] || "P01";
+    jumpTo(targetP);
+  }
+}
+document.getElementById("switchSectionBtn").onclick = toggleSection;
+
+// Keyboard Shortcuts
+document.addEventListener("keydown", e => {
+  if (e.target.matches("input, textarea, button, a") || e.target.closest("[role='button']")) return;
+  if (["ArrowRight", "PageDown", " "].includes(e.key)) { e.preventDefault(); show(current + 1); }
+  if (["ArrowLeft", "PageUp"].includes(e.key)) { e.preventDefault(); show(current - 1); }
+  if (e.key === "Home") show(0);
+  if (e.key === "End") show(slides.length - 1);
+  if (e.key.toLowerCase() === "r") jumpTo("P03");
+  if (e.key.toLowerCase() === "f") document.getElementById("fullBtn").click();
+  if (e.key.toLowerCase() === "t") document.getElementById("themeBtn").click();
+  if (e.key.toLowerCase() === "m") document.getElementById("tocBtn").click();
+  if (e.key.toLowerCase() === "h") toggleSection();
+  if (e.key.toLowerCase() === "d") document.getElementById("drawBtn").click();
+  if (e.key.toLowerCase() === "c") document.getElementById("clearBtn").click();
+  if (e.key === "Escape") document.getElementById("toc").classList.remove("open");
+});
+
+// Wall Clock
+setInterval(() => {
+  const c = document.getElementById("wallClock");
+  if (c) c.textContent = new Date().toLocaleTimeString("zh-TW", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Taipei" });
+}, 1000);
+
+render();
+
+// Hash router on load
+const hashMatch = location.hash.match(/^#slide-(P\d+|H\d+|\d+)$/i);
+if (hashMatch) {
+  jumpTo(hashMatch[1]);
+}
+if (speakerMode) {
+  document.body.classList.add("speaker-mode");
+}
+</script>
+</body>
+</html>
