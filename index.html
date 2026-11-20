@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>從數位教學到 AI 協作｜臺南高商教師研習（SOIL 雙層旗艦版 v2：極簡投影＋學員講義）</title>
+<title>從數位教學到 AI 協作｜臺南高商教師研習（SOIL 雙層旗艦版 v3：極簡投影＋學員講義）</title>
 <style>
 :root {
   --ink: #15304a;
@@ -497,6 +497,102 @@ body.dark-mode .road-seg.done { background: #123b3f; border-color: #1f7a82; colo
   .roadstep { min-height: 120px; }
   .controls { max-width: 98vw; overflow-x: auto; }
 }
+
+/* ============================================================================
+   A4 / 講義與流程演練友善列印樣式 (Print Style)
+   ============================================================================ */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 8mm 10mm;
+  }
+  html, body {
+    background: #ffffff !important;
+    color: #112538 !important;
+    font-size: 11pt !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  /* 隱藏無關列印的互動與控制元件 */
+  .controls, .toc, .speaker, .drawing-canvas, .copy-btn, .startTimer, .jump-pill, #themeBtn, #drawBtn, #clearBtn, #speakerBtn, #fullBtn {
+    display: none !important;
+  }
+  .stage {
+    display: block !important;
+    min-height: auto !important;
+    padding: 0 !important;
+  }
+  /* 將所有投影片展開，每一頁就是一張 A4 */
+  .slide {
+    display: flex !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 95vh !important;
+    min-height: 95vh !important;
+    aspect-ratio: auto !important;
+    box-shadow: none !important;
+    border: 1.5px solid #d0dce3 !important;
+    border-radius: 10px !important;
+    margin: 0 0 25px 0 !important;
+    padding: 20px 26px 14px !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    background: #ffffff !important;
+    color: #15304a !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+  /* 列印時特別印出講師備課指引（Speaker Notes）以供演練流程 */
+  .slide::after {
+    content: "🎙 講師備課演練指引：" attr(data-note);
+    display: block;
+    margin-top: 8px;
+    padding: 6px 12px;
+    background: #eef7f6 !important;
+    border-left: 5px solid #0c7d78 !important;
+    color: #0c7d78 !important;
+    font-size: 9.5pt !important;
+    font-weight: 800 !important;
+    border-radius: 4px !important;
+  }
+  .slide[data-note=""]::after {
+    display: none !important;
+  }
+  .prompt-box {
+    background: #f4f8fb !important;
+    color: #102e45 !important;
+    border: 1.5px solid #b5cbd8 !important;
+    font-size: 8.5pt !important;
+    line-height: 1.45 !important;
+    white-space: pre-wrap !important;
+  }
+  .card {
+    box-shadow: none !important;
+    border: 1px solid #d3e2ea !important;
+    background: #fafcfe !important;
+  }
+  .card.accent { background: #f0f8f7 !important; border-color: #b8ded8 !important; }
+  .card.warm { background: #fef9f2 !important; border-color: #f3dfc0 !important; }
+  .card.danger { background: #fdf3f2 !important; border-color: #f5c4be !important; }
+  .task-card {
+    background: #f0f8f7 !important;
+    color: #0c7d78 !important;
+    border: 2px solid #0c7d78 !important;
+  }
+  .task-card h3, .task-card .timer { color: #0c7d78 !important; }
+  .task-card .target { color: #15304a !important; }
+  .go-btn {
+    box-shadow: none !important;
+    border: 1px solid #99c2d8 !important;
+    font-size: 9pt !important;
+    padding: 3px 8px !important;
+  }
+  .return-bar small { display: none !important; }
+}
 </style>
 </head>
 <body>
@@ -510,6 +606,7 @@ body.dark-mode .road-seg.done { background: #123b3f; border-color: #1f7a82; colo
   <span class="counter" id="counter" aria-live="polite">投影 P01 / P20</span>
   <button type="button" id="next" title="下一頁 (→ / Space / PageDown)">→</button>
   <button type="button" id="switchSectionBtn" class="switch-btn" title="切換 投影版／講義卡庫 (H)">📖 切換講義</button>
+  <button type="button" id="printBtn" title="列印全套講義／備課手冊 (Ctrl+P)" onclick="window.print()">🖨️ 列印</button>
   <button type="button" id="themeBtn" title="切換 深淺色模式 (T)">🌙</button>
   <button type="button" id="drawBtn" title="畫筆批註 (D)">✎</button>
   <button type="button" id="clearBtn" title="清除畫筆 (C)">⌫</button>
@@ -1478,7 +1575,7 @@ function slideHTML(s, i) {
     : `📽️ ${s.id}／P20　${phase} · ${s.section}　${s.time}`;
 
   return `
-    <article class="slide" data-index="${i}" data-id="${s.id}">
+    <article class="slide" data-index="${i}" data-id="${s.id}" data-note="${s.note ? s.note.replace(/"/g, '&quot;') : ''}">
       <div class="eyebrow-row">
         <span class="eyebrow">${eyebrowText}</span>
         ${s.type === "stage" && stageToHandoutMap[s.id] ? `<button type="button" class="jump-pill" onclick="jumpTo('${stageToHandoutMap[s.id]}')">📋 查看學員講義 ➔</button>` : ""}
