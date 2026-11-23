@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>從數位教學到 AI 協作｜臺南高商教師研習（SOIL 雙層旗艦版 v3：極簡投影＋學員講義）</title>
+<title>從數位教學到 AI 協作｜臺南高商教師研習（SOIL 雙層旗艦版 v4：極簡投影＋學員講義）</title>
 <style>
 :root {
   --ink: #15304a;
@@ -164,6 +164,17 @@ body.dark-mode .return-bar { background: #12383c; border-color: #1f7a82; color: 
 .body p { margin: 0.25em 0; }
 .body ul, .body ol { margin: 0.2em 0; padding-left: 1.3em; }
 .body li { margin: 0.22em 0; }
+
+
+/* Handout layout fix: prevent tall prompt-box from pushing copy-btn out of view */
+.slide[data-id^="H"] .body {
+  justify-content: flex-start;
+  padding-top: 2px;
+}
+.slide[data-id^="H"] .cols .prompt-box {
+  max-height: 43vh;
+  overflow-y: auto;
+}
 
 /* Grids */
 .cols {
@@ -603,7 +614,7 @@ body.dark-mode .road-seg.done { background: #123b3f; border-color: #1f7a82; colo
   <button type="button" id="tocBtn" title="開啟章節目錄 (M)">☰ 目錄</button>
   <button type="button" id="roadBtn" title="回到 5 站路線圖 (R)">🗺 路線</button>
   <button type="button" id="prev" title="上一頁 (← / PageUp)">←</button>
-  <span class="counter" id="counter" aria-live="polite">投影 P01 / P20</span>
+  <span class="counter" id="counter" aria-live="polite">投影 P01 / P21</span>
   <button type="button" id="next" title="下一頁 (→ / Space / PageDown)">→</button>
   <button type="button" id="switchSectionBtn" class="switch-btn" title="切換 投影版／講義卡庫 (H)">📖 切換講義</button>
   <button type="button" id="printBtn" title="列印全套講義／備課手冊 (Ctrl+P)" onclick="window.print()">🖨️ 列印</button>
@@ -673,36 +684,36 @@ const promptCard = (id, text) => `
 // 5-STATION ROADMAP CONFIG
 // ============================================================================
 const route = [
-  ["總體與隱私", "設定習慣、帳號與資料界線", "13:00–13:25", "P01–P04"],
-  ["生活日曆運用", "單筆活動添加、校曆 PDF 轉 CSV", "13:25–13:55", "P05–P08"],
-  ["班級經營運用", "Gemini Notebook 依來源查核", "13:55–14:10", "P09–P10"],
-  ["教學命題審題", "段考出題五件套、三大 Skill 審題", "14:10–14:55", "P11–P17"],
-  ["彩蛋與行動收尾", "Canvas 寄成績、三項行動實踐", "14:55–15:00", "P18–P20"]
+  ["總體、隱私與 PARTS", "設定習慣、界線與 Prompt 原則", "13:00–13:28", "P01–P05"],
+  ["生活日曆運用", "單筆活動添加、校曆 PDF 轉 CSV", "13:28–13:55", "P06–P09"],
+  ["班級經營運用", "Gemini Notebook 依來源查核", "13:55–14:10", "P10–P11"],
+  ["教學命題審題", "段考出題五件套、三大 Skill 審題", "14:10–14:55", "P12–P18"],
+  ["彩蛋與行動收尾", "Canvas 寄成績、三項行動實踐", "14:55–15:00", "P19–P21"]
 ];
-const stageTargets = ["P01", "P05", "P09", "P11", "P18"];
+const stageTargets = ["P01", "P06", "P10", "P12", "P19"];
 
 // Smart Bidirectional Mapping: Stage Slide <-> Handout Slide
 const stageToHandoutMap = {
-  "P01": "H01", "P02": "H01", "P03": "H01", "P04": "H01",
-  "P05": "H02", "P06": "H02",
-  "P07": "H03", "P08": "H03",
-  "P09": "H04", "P10": "H04",
-  "P11": "H05", "P12": "H05",
-  "P13": "H06", "P14": "H06",
-  "P15": "H07", "P16": "H07", "P17": "H07",
-  "P18": "H08",
-  "P19": "H08", "P20": "H08"
+  "P01": "H01", "P02": "H01", "P03": "H01", "P04": "H01", "P05": "H01",
+  "P06": "H02", "P07": "H02",
+  "P08": "H03", "P09": "H03",
+  "P10": "H04", "P11": "H04",
+  "P12": "H05", "P13": "H05",
+  "P14": "H06", "P15": "H06",
+  "P16": "H07", "P17": "H07", "P18": "H07",
+  "P19": "H08",
+  "P20": "H08", "P21": "H08"
 };
 
 const handoutToStageMap = {
   "H01": "P04",
-  "H02": "P06",
-  "H03": "P08",
-  "H04": "P10",
-  "H05": "P12",
-  "H06": "P13",
-  "H07": "P17",
-  "H08": "P18"
+  "H02": "P07",
+  "H03": "P09",
+  "H04": "P11",
+  "H05": "P13",
+  "H06": "P14",
+  "H07": "P18",
+  "H08": "P19"
 };
 
 let lastStageId = "P01";
@@ -819,9 +830,34 @@ const slides = [
     note: "強調：設定好 G00-A 之後，Gemini 就會終生記住『事實查核』習慣。"
   },
 
-  // P05: 生活運用 ① Google Calendar
+  // P05: Prompt 黃金原則 PARTS 五要素架構
   {
-    type: "stage", id: "P05", stage: 1, section: "生活運用｜日曆", time: "13:25–13:30",
+    type: "stage", id: "P05", stage: 0, section: "Prompt 原則", time: "13:23–13:28",
+    title: "精準 Prompt 原則｜用 PARTS 交代角色、對象、資料、任務與規格",
+    body: `
+      <div class="flow" style="margin:1.2% 0">
+        <span><b>P 角色</b><small class="muted">Persona</small></span><i>→</i>
+        <span><b>A 對象</b><small class="muted">Audience</small></span><i>→</i>
+        <span><b>R 資料</b><small class="muted">Reference</small></span><i>→</i>
+        <span><b>T 任務</b><small class="muted">Task</small></span><i>→</i>
+        <span><b>S 規格</b><small class="muted">Spec</small></span>
+      </div>
+      ${promptCard("prompt_parts", `你是［角色］，請為［對象］，根據［背景／資料］，完成［任務］。
+請用［表格／條列／短文］呈現，限制為［字數／程度／語氣］。
+資訊不足請先提問，不要自行補上事實。`)}
+      <div class="card accent" style="padding:12px 18px;margin-top:0.5em;display:flex;flex-direction:row;justify-content:space-between;align-items:center">
+        <div>
+          <b style="color:var(--mint);font-size:1.1em">💡 核心口訣：追問修正，教師查核！</b>
+          <span class="muted" style="font-size:0.9em;margin-left:8px">初次產出不合預期不必重寫，直接追問微調格式與難度。</span>
+        </div>
+      </div>
+    `,
+    note: "寫好提示詞的黃金結構：PARTS 五要素（角色、對象、資料、任務、規格），並記住核心口訣：追問修正，教師查核！"
+  },
+
+  // P06 (原 P05): 生活運用 ① Google Calendar
+  {
+    type: "stage", id: "P06", stage: 1, section: "生活運用｜日曆", time: "13:25–13:30",
     title: "生活運用 ①｜Google Calendar 單筆活動添加",
     body: `
       <div class="cols three">
@@ -855,7 +891,7 @@ const slides = [
 
   // P06: 動手做 ①
   {
-    type: "stage", id: "P06", stage: 1, section: "動手做 ①", time: "13:30–13:35",
+    type: "stage", id: "P07", stage: 1, section: "動手做 ①", time: "13:30–13:35",
     title: "動手做 ①｜預覽並核對研習測試活動",
     body: `
       <div class="cols">
@@ -880,7 +916,7 @@ const slides = [
 
   // P07: 生活運用 ② 學校校曆 PDF
   {
-    type: "stage", id: "P07", stage: 1, section: "生活運用｜校曆", time: "13:35–13:43",
+    type: "stage", id: "P08", stage: 1, section: "生活運用｜校曆", time: "13:35–13:43",
     title: "生活運用 ②｜Gemini Notebook 來源加入學校行事曆 PDF",
     body: `
       <div class="cols">
@@ -911,7 +947,7 @@ const slides = [
 
   // P08: 動手做 ②
   {
-    type: "stage", id: "P08", stage: 1, section: "動手做 ②", time: "13:43–13:55",
+    type: "stage", id: "P09", stage: 1, section: "動手做 ②", time: "13:43–13:55",
     title: "動手做 ②｜學校行事曆轉 CSV 檔案與匯入",
     body: `
       <div class="cols">
@@ -935,7 +971,7 @@ const slides = [
 
   // P09: 班級經營運用
   {
-    type: "stage", id: "P09", stage: 2, section: "班級經營", time: "13:55–14:02",
+    type: "stage", id: "P10", stage: 2, section: "班級經營", time: "13:55–14:02",
     title: "班級經營運用｜Gemini Notebook 升學與常規查詢示範",
     body: `
       <div class="cols">
@@ -962,7 +998,7 @@ const slides = [
 
   // P10: 動手做 ③ (修改：學期成績不及格補救方式)
   {
-    type: "stage", id: "P10", stage: 2, section: "動手做 ③", time: "14:02–14:10",
+    type: "stage", id: "P11", stage: 2, section: "動手做 ③", time: "14:02–14:10",
     title: "動手做 ③｜用一處原文核對 AI 的回答",
     body: `
       <div class="cols">
@@ -986,7 +1022,7 @@ const slides = [
 
   // P11: 教學運用 ① 英文段考出題
   {
-    type: "stage", id: "P11", stage: 3, section: "教學命題", time: "14:10–14:18",
+    type: "stage", id: "P12", stage: 3, section: "教學命題", time: "14:10–14:18",
     title: "教學命題運用｜Gemini Notebook 英文段考出題輔助",
     body: `
       <div class="cols">
@@ -1019,7 +1055,7 @@ const slides = [
 
   // P12: 動手做 ④
   {
-    type: "stage", id: "P12", stage: 3, section: "動手做 ④", time: "14:18–14:26",
+    type: "stage", id: "P13", stage: 3, section: "動手做 ④", time: "14:18–14:26",
     title: "動手做 ④｜產生 1–2 題素養閱讀題並保存草稿",
     body: `
       <div class="cols">
@@ -1044,7 +1080,7 @@ const slides = [
 
   // P13: 歷屆試題彩蛋
   {
-    type: "stage", id: "P13", stage: 3, section: "題庫彩蛋", time: "14:26–14:31",
+    type: "stage", id: "P14", stage: 3, section: "題庫彩蛋", time: "14:26–14:31",
     title: "考古題彩蛋｜統測真題嚴格篩選：目標單字必為唯一正解",
     body: `
       <div class="cols">
@@ -1072,7 +1108,7 @@ const slides = [
 
   // P14: 內部初檢
   {
-    type: "stage", id: "P14", stage: 3, section: "內部初檢", time: "14:31–14:35",
+    type: "stage", id: "P15", stage: 3, section: "內部初檢", time: "14:31–14:35",
     title: "出題內部初檢｜記事轉來源交叉查，非選題防洩題",
     body: `
       <div class="cols three">
@@ -1102,7 +1138,7 @@ const slides = [
 
   // P15: 獨立審題 Skill
   {
-    type: "stage", id: "P15", stage: 3, section: "獨立審題", time: "14:35–14:40",
+    type: "stage", id: "P16", stage: 3, section: "獨立審題", time: "14:35–14:40",
     title: "教學審題防線｜審題分兩步：Notebook 初檢，Skill 客觀複核",
     body: `
       <div class="flow" style="margin:2% 0">
@@ -1132,7 +1168,7 @@ const slides = [
 
   // P16: 三個 Skill 與防呆 (修改：Zip檔案/資料夾)
   {
-    type: "stage", id: "P16", stage: 3, section: "Skills 實戰", time: "14:40–14:45",
+    type: "stage", id: "P17", stage: 3, section: "Skills 實戰", time: "14:40–14:45",
     title: "Gem 過渡期善用 Skill｜三大教師專用技能 ＆ 上傳防呆",
     body: `
       <div class="cols three">
@@ -1168,7 +1204,7 @@ const slides = [
 
   // P17: 動手做 ⑤ (新增：三大 Skills 10 分鐘實作測試)
   {
-    type: "stage", id: "P17", stage: 3, section: "動手做 ⑤", time: "14:45–14:55",
+    type: "stage", id: "P18", stage: 3, section: "動手做 ⑤", time: "14:45–14:55",
     title: "動手做 ⑤｜三大 Skills 實作測試（10 分鐘）",
     body: `
       <div class="cols">
@@ -1197,7 +1233,7 @@ const slides = [
 
   // P18: 彩蛋 GAS 一鍵寄成績
   {
-    type: "stage", id: "P18", stage: 4, section: "進階彩蛋", time: "14:55–14:58",
+    type: "stage", id: "P19", stage: 4, section: "進階彩蛋", time: "14:55–14:58",
     title: "進階彩蛋｜Gemini Canvas 協助設計 GAS：一鍵寄發學生成績",
     body: `
       <div class="cols">
@@ -1227,7 +1263,7 @@ const slides = [
 
   // P19: Call to Action & 結語
   {
-    type: "stage", id: "P19", stage: 4, section: "結語與行動", time: "14:58–15:00",
+    type: "stage", id: "P20", stage: 4, section: "結語與行動", time: "14:58–15:00",
     title: "Call to Action｜三個實踐行動 ＆ 研習結語",
     body: `
       <div class="cols three">
@@ -1264,7 +1300,7 @@ const slides = [
 
   // P20: Q&A 與 AI科技學習影音資源 (新增最後一頁)
   {
-    type: "stage", id: "P20", stage: 4, section: "課後延伸", time: "課後交流",
+    type: "stage", id: "P21", stage: 4, section: "課後延伸", time: "課後交流",
     title: "Q & A 交流 ＆ AI 科技學習影音資源",
     body: `
       <div class="cols four">
@@ -1337,10 +1373,10 @@ const slides = [
 
   // H02: P04 日曆指令
   {
-    type: "handout", id: "H02", returnTarget: "P06", returnLabel: "動手做 ① 預覽測試活動",
+    type: "handout", id: "H02", returnTarget: "P07", returnLabel: "動手做 ① 預覽測試活動",
     title: "學員講義 H02｜P04 單筆活動 Google Calendar 添加與預覽指令",
     body: `
-      ${returnBar("P06", "動手做 ① 預覽測試活動")}
+      ${returnBar("P07", "動手做 ① 預覽測試活動")}
       <p class="muted" style="font-size:0.9em;margin-bottom:0.4em">在 Gemini 對話框輸入 <code>@Google Calendar</code>，接著貼入以下提示詞送出：</p>
       ${promptCard("prompt_p04", `@Google Calendar 請準備一項「研習測試」活動：
 時間：下週三上午 10:00 至 12:00
@@ -1356,10 +1392,10 @@ const slides = [
 
   // H03: 校曆轉 CSV 一站式指令
   {
-    type: "handout", id: "H03", returnTarget: "P08", returnLabel: "動手做 ② 校曆轉 CSV 匯入",
+    type: "handout", id: "H03", returnTarget: "P09", returnLabel: "動手做 ② 校曆轉 CSV 匯入",
     title: "學員講義 H03｜校曆轉 Google 日曆 CSV 一站式指令 ＆ 匯入三步驟",
     body: `
-      ${returnBar("P08", "動手做 ② 校曆轉 CSV 匯入")}
+      ${returnBar("P09", "動手做 ② 校曆轉 CSV 匯入")}
       <div class="cols">
         <div>
           <p class="muted" style="font-size:0.86em;margin-bottom:4px">請先將「學校行事曆 PDF」加入 Notebook 來源，複製此指令貼入對話框：</p>
@@ -1397,10 +1433,10 @@ Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Locati
 
   // H04: 升學管道提問 (修改：兩大升學提問)
   {
-    type: "handout", id: "H04", returnTarget: "P10", returnLabel: "動手做 ③ 原文引用回查",
+    type: "handout", id: "H04", returnTarget: "P11", returnLabel: "動手做 ③ 原文引用回查",
     title: "學員講義 H04｜Gemini Notebook 升學管道示範提問與留白檢核",
     body: `
-      ${returnBar("P10", "動手做 ③ 原文引用回查")}
+      ${returnBar("P11", "動手做 ③ 原文引用回查")}
       <p class="muted" style="font-size:0.9em;margin-bottom:0.4em">開啟「升學簡章或示範 Notebook」，可貼入以下兩大升學實戰提問測試來源引用：</p>
       ${promptCard("prompt_admission", `請依據我選取的資料來源，回答以下升學管道相關問題：
 
@@ -1418,10 +1454,10 @@ Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Locati
 
   // H05: 英文段考出題
   {
-    type: "handout", id: "H05", returnTarget: "P12", returnLabel: "動手做 ④ 段考出題草稿",
+    type: "handout", id: "H05", returnTarget: "P13", returnLabel: "動手做 ④ 段考出題草稿",
     title: "學員講義 H05｜英文段考五件套命題指令（龍騰 B3 L5–L6）",
     body: `
-      ${returnBar("P12", "動手做 ④ 段考出題草稿")}
+      ${returnBar("P13", "動手做 ④ 段考出題草稿")}
       <p class="muted" style="font-size:0.9em;margin-bottom:0.4em">開啟「台南高商龍騰段考出題 Notebook」，貼入以下五件套命題指令：</p>
       ${promptCard("prompt_exam", `請只根據我選取的龍騰 B3 L5–L6 來源資料，為技術型高級中等學校（技高）學生設計 1–2 題非連續文本素養閱讀測驗題（附圖表或比較資訊）：
 
@@ -1441,10 +1477,10 @@ Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Locati
 
   // H06: 統測真題篩選
   {
-    type: "handout", id: "H06", returnTarget: "P13", returnLabel: "考古題彩蛋",
+    type: "handout", id: "H06", returnTarget: "P14", returnLabel: "考古題彩蛋",
     title: "學員講義 H06｜統測真題嚴格篩選指令 ＆ 題庫下載",
     body: `
-      ${returnBar("P13", "考古題彩蛋")}
+      ${returnBar("P14", "考古題彩蛋")}
       <p class="muted" style="font-size:0.9em;margin-bottom:0.4em">在已上傳歷屆試題 Markdown 的筆記本中，貼入以下篩選指令：</p>
       ${promptCard("prompt_testbank", `請檢索《統測 100–115 歷屆試題》來源，搜尋與龍騰第三冊第五課單字相關的歷屆試題：
 
@@ -1461,10 +1497,10 @@ Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Locati
 
   // H07: 三大 Skills 下載與建立
   {
-    type: "handout", id: "H07", returnTarget: "P17", returnLabel: "動手做 ⑤ Skills 實測",
+    type: "handout", id: "H07", returnTarget: "P18", returnLabel: "動手做 ⑤ Skills 實測",
     title: "學員講義 H07｜三大教師 Skills 資料夾 ＆ 自訂上傳（Zip檔案／資料夾）",
     body: `
-      ${returnBar("P17", "動手做 ⑤ Skills 實測")}
+      ${returnBar("P18", "動手做 ⑤ Skills 實測")}
       <div class="cols">
         <div class="card" style="padding:5%">
           <span class="tag">雲端資源下載</span>
@@ -1496,10 +1532,10 @@ Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Locati
 
   // H08: GAS 寄成績
   {
-    type: "handout", id: "H08", returnTarget: "P18", returnLabel: "彩蛋 GAS 一鍵寄成績",
+    type: "handout", id: "H08", returnTarget: "P19", returnLabel: "彩蛋 GAS 一鍵寄成績",
     title: "學員講義 H08｜Gemini Canvas 設計 GAS code 一鍵寄發學生成績",
     body: `
-      ${returnBar("P18", "彩蛋 GAS 一鍵寄成績")}
+      ${returnBar("P19", "彩蛋 GAS 一鍵寄成績")}
       <div class="cols">
         <div class="card accent" style="padding:4.5%">
           <span class="tag">張老師完整講義</span>
@@ -1572,7 +1608,7 @@ function slideHTML(s, i) {
   const phase = stage === 0 ? "引起動機" : (stage === 4 ? "喚起行動" : "維持注意");
   const eyebrowText = isHandout 
     ? `📖 學員實作講義庫 · ${s.id}` 
-    : `📽️ ${s.id}／P20　${phase} · ${s.section}　${s.time}`;
+    : `📽️ ${s.id}／P21　${phase} · ${s.section}　${s.time}`;
 
   return `
     <article class="slide" data-index="${i}" data-id="${s.id}" data-note="${s.note ? s.note.replace(/"/g, '&quot;') : ''}">
@@ -1605,7 +1641,7 @@ function render() {
   document.getElementById("stage").innerHTML = slides.map(slideHTML).join("");
   
   // Build TOC
-  let tocHTML = `<h3>📽️ 台上極簡投影 (P01–P20)</h3>`;
+  let tocHTML = `<h3>📽️ 台上極簡投影 (P01–P21)</h3>`;
   slides.filter(s => s.type === "stage").forEach(s => {
     tocHTML += `<button type="button" onclick="jumpTo('${s.id}')"><b>${s.id}</b> ${s.title}</button>`;
   });
@@ -1630,7 +1666,7 @@ function show(n, broadcast = true) {
   // Update counter
   const counterEl = document.getElementById("counter");
   if (s.type === "stage") {
-    counterEl.textContent = `投影 ${s.id} / P20`;
+    counterEl.textContent = `投影 ${s.id} / P21`;
     counterEl.style.color = "#8de2d0";
   } else {
     counterEl.textContent = `講義 ${s.id} / H08`;
